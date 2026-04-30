@@ -1,6 +1,5 @@
 package com.caiocesarmods.dtbrbiomesmod.Trees.Species;
 
-import com.ferreusveritas.dynamictrees.api.registry.RegistryHandler;
 import com.ferreusveritas.dynamictrees.api.registry.TypedRegistry;
 import com.ferreusveritas.dynamictrees.blocks.leaves.LeavesProperties;
 import com.ferreusveritas.dynamictrees.trees.Family;
@@ -27,5 +26,4 @@ public class CashewSpecies extends Species {
         // 🌿 Makes branches thinner → more spread (bushy)
         this.setTapering(0.5f);
     }
-
 }
