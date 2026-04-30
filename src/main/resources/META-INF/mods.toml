@@ -66,5 +66,11 @@ side="BOTH"
     versionRange="[1.16.5,1.17)"
     ordering="NONE"
     side="BOTH"
+[[dependencies.dtbrbiomesmod]]
+modId="brbiomesmod"
+mandatory=true
+versionRange="[1.0.0,)"
+ordering="AFTER"
+side="BOTH"
 
 

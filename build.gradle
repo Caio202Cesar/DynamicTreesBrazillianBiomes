@@ -109,11 +109,13 @@ repositories {
     maven {
         url 'https://harleyoconnor.com/maven'
     }
-
-    // If you have mod jar dependencies in ./libs, you can declare them as a repository like so:
-    // flatDir {
-    //     dir 'libs'
-    // }
+    maven {
+        url = uri("C:/Users/ADM/IdeaProjects/BrazilianBiomesMod/mcmodsrepo")
+    }
+    //mavenLocal()
+    //flatDir {
+        //dirs 'libs' // if you're using your built mod jar locally
+    //}
 }
 
 dependencies {
@@ -125,6 +127,8 @@ dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
     implementation fg.deobf("com.ferreusveritas.dynamictrees:DynamicTrees-1.16.5:0.10.5")
+    implementation fg.deobf("com.brbiomesmod:brbiomesmod:1.0.0")
+
     // Real mod deobf dependency examples - these get remapped to your current mappings
     // compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api") // Adds JEI API as a compile dependency
     // runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}") // Adds the full JEI mod as a runtime dependency
