@@ -1,0 +1,8 @@
+{
+  "parent": "dynamictrees:block/smartmodel/sapling",
+  "textures": {
+    "particle": "brbiomesmod:block/brazillian_rosewood_leaves",
+    "log": "brbiomesmod:block/brazillian_rosewood_log",
+    "leaves": "brbiomesmod:block/brazillian_rosewood_leaves"
+  }
+}
