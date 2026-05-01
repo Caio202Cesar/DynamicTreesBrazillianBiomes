@@ -12,7 +12,12 @@ public class DTBrazillianBiomesGenFeatures {
             new ResourceLocation(BrazillianBiomesDTAddon.MOD_ID,"acai_bunch")
     );
 
+    public static final GenFeature JABUTICABA_FLOWERING_BRANCH = new FeatureGenJabuticabaFloweringBranch(
+            new ResourceLocation(BrazillianBiomesDTAddon.MOD_ID,"jabuticaba_flowering_branch")
+    );
+
     public static void register(final Registry<GenFeature> registry) {
         registry.registerAll(ACAI_BUNCH_FEATURE);
+        registry.registerAll(JABUTICABA_FLOWERING_BRANCH);
     }
 }
