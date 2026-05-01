@@ -1,4 +1,4 @@
-package com.caiocesarmods.dtbrbiomesmod.FeaturesGenerator.FruitBunchGen;
+package com.caiocesarmods.dtbrbiomesmod.GenFeatures.FruitBunchGenFeatures;
 
 import com.ferreusveritas.dynamictrees.api.TreeHelper;
 import com.ferreusveritas.dynamictrees.api.configurations.ConfigurationProperty;
