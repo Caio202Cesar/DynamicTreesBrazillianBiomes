@@ -27,7 +27,8 @@ public class PalmFrondsBakedModel implements IDynamicBakedModel {
     private final IBakedModel[] bakedFronds = new IBakedModel[8]; // 8 = Number of surrounding blocks
 
     public PalmFrondsBakedModel (ResourceLocation modelResLoc, ResourceLocation frondsResLoc){
-        this.blockModel = new BlockModel(null, new ArrayList<>(), new HashMap<>(), false, BlockModel.GuiLight.FRONT, ItemCameraTransforms.NO_TRANSFORMS, ItemOverrideList.EMPTY.getOverrides());
+        this.blockModel = new BlockModel(null, new ArrayList<>(), new HashMap<>(),
+                false, BlockModel.GuiLight.FRONT, ItemCameraTransforms.DEFAULT, ItemOverrideList.EMPTY.getOverrides());
         this.frondsResLoc = frondsResLoc;
         INSTANCES.add(this);
     }
@@ -37,7 +38,7 @@ public class PalmFrondsBakedModel implements IDynamicBakedModel {
 
         for (CoordUtils.Surround surr : CoordUtils.Surround.values()) {
 
-            SimpleBakedModel.Builder builder = new SimpleBakedModel.Builder(blockModel.customData, ItemOverrideList.EMPTY).particle(frondsTexture);
+            SimpleBakedModel.Builder builder = new SimpleBakedModel.Builder(blockModel.customData, ItemOverrideList.EMPTY).setTexture(frondsTexture);
 
             BlockVertexData[] quadData = {
                     new BlockVertexData(0, 0, 3, 15, 4),
@@ -122,7 +123,7 @@ public class PalmFrondsBakedModel implements IDynamicBakedModel {
                             outData[2].toInts(frondsTexture),
                             outData[3].toInts(frondsTexture)
                     );
-                    builder.addUnculledFace(new BakedQuad(vertices,
+                    builder.addGeneralQuad(new BakedQuad(vertices,
                             0, FaceBakery.getFacingFromVertexData(vertices), frondsTexture, true)
                     );
 
@@ -132,7 +133,7 @@ public class PalmFrondsBakedModel implements IDynamicBakedModel {
                             outData[6].toInts(frondsTexture),
                             outData[7].toInts(frondsTexture)
                     );
-                    builder.addUnculledFace(new BakedQuad(vertices,
+                    builder.addGeneralQuad(new BakedQuad(vertices,
                             0, FaceBakery.getFacingFromVertexData(vertices), frondsTexture, true)
                     );
 
