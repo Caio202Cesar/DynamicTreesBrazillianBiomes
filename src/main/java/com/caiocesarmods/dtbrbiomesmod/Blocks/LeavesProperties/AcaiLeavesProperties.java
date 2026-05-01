@@ -1,4 +1,4 @@
-package com.caiocesarmods.dtbrbiomesmod.Blocks;
+package com.caiocesarmods.dtbrbiomesmod.Blocks.LeavesProperties;
 
 import com.ferreusveritas.dynamictrees.api.registry.TypedRegistry;
 import com.ferreusveritas.dynamictrees.blocks.leaves.DynamicLeavesBlock;
