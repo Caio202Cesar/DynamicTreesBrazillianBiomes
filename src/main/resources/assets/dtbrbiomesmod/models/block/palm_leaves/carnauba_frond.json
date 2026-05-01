@@ -1,5 +1,5 @@
 {
-  "loader": "brbiomesmod:large_palm_fronds",
+  "loader": "brbiomesmod:palm_fronds",
   "textures": {
     "frond": "dtbrbiomesmod:block/palm_leaves/carnauba_frond"
   }
