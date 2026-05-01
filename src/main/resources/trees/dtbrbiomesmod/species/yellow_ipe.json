@@ -1,0 +1,19 @@
+{
+  "name": "ipe_yellow",
+  "family": "ipe",
+
+  "signal_energy": 12,
+  "lowest_branch_height": 4,
+  "up_probability": 3,
+  "tapering": 0.35,
+
+  "leaves_properties": {
+    "type": "dynamic_trees:leaves",
+    "texture_overrides": {
+      "spring": "brbiomesmod:block/leaves_spring",
+      "summer": "brbiomesmod:block/leaves_summer",
+      "autumn": "brbiomesmod:block/leaves_autumn",
+      "winter": "brbiomesmod:block/leaves_winter"
+    }
+  }
+}

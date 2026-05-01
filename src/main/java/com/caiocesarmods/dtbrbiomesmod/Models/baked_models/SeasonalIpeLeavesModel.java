@@ -10,7 +10,10 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.client.extensions.IForgeBakedModel;
+import net.minecraftforge.client.model.data.IModelData;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -21,117 +24,129 @@ public class SeasonalIpeLeavesModel implements IBakedModel {
     private final TextureAtlasSprite blossomTexture;
     private final TextureAtlasSprite dormantTexture;
 
-    public SeasonalIpeLeavesModel(IBakedModel baseModel, TextureAtlasSprite blossomTexture, TextureAtlasSprite dormantTexture) {
+    public SeasonalIpeLeavesModel(IBakedModel baseModel,
+                                  TextureAtlasSprite blossomTexture,
+                                  TextureAtlasSprite dormantTexture) {
         this.baseModel = baseModel;
         this.blossomTexture = blossomTexture;
         this.dormantTexture = dormantTexture;
-
     }
+
+    // =========================================================
+    // MAIN RENDER METHOD (FORGE PATH)
+    // =========================================================
 
     @Override
-    public List<BakedQuad> getQuads(BlockState state, Direction side, Random rand) {
-        List<BakedQuad> quads = new ArrayList<>(baseModel.getQuads(state, side, rand));
+    public List<BakedQuad> getQuads(@Nullable BlockState state,
+                                    @Nullable Direction side,
+                                    Random rand,
+                                    IModelData extraData) {
+
+        List<BakedQuad> baseQuads = ((IForgeBakedModel) baseModel)
+                .getQuads(state, side, rand, extraData);
+
+        List<BakedQuad> result = new ArrayList<>(baseQuads);
 
         World world = Minecraft.getInstance().world;
+        if (world == null) return result;
 
-        float biomeTemp = 0.8f;
+        BlockPos pos = getReferencePos();
 
-        if (world != null) {
-            Minecraft mc = Minecraft.getInstance();
-            if (mc.player != null) {
-                BlockPos pos = mc.player.getPosition();
-                biomeTemp = world.getBiome(pos).getTemperature(pos);
-            }
-        }
-
-        float season = SeasonHelper.getSeasonValue(world, BlockPos.ZERO);
+        float biomeTemp = world.getBiome(pos).getTemperature(pos);
+        float season = SeasonHelper.getSeasonValue(world, pos);
 
         if (isFloweringSeason(season, biomeTemp)) {
-            quads.addAll(createBlossomOverlayQuads(side, rand));
+            result.addAll(createOverlay(baseQuads, blossomTexture));
         } else if (isDormantSeason(season, biomeTemp)) {
-            quads.addAll(createDormantOverlayQuads(side, rand));
+            result.clear();
+            result.addAll(createOverlay(baseQuads, dormantTexture));
         }
 
-        return quads;
+        return result;
     }
+
+    // =========================================================
+    // FALLBACK (VANILLA PATH)
+    // =========================================================
+
+    @Override
+    public List<BakedQuad> getQuads(@Nullable BlockState state,
+                                    @Nullable Direction side,
+                                    Random rand) {
+        return baseModel.getQuads(state, side, rand);
+    }
+
+    // =========================================================
+    // POSITION HELPER
+    // =========================================================
+
+    private BlockPos getReferencePos() {
+        Minecraft mc = Minecraft.getInstance();
+
+        if (mc.player != null) {
+            return mc.player.getPosition();
+        }
+
+        return BlockPos.ZERO;
+    }
+
+    // =========================================================
+    // SEASON LOGIC
+    // =========================================================
 
     private boolean isTropical(float temp) {
         return temp >= 0.9f;
     }
 
-    private boolean isFloweringSeason(float s, float biomeTemp) {
-        if (isTropical(biomeTemp)) {
-            return isFloweringSeason_Tropical(s);
-        } else {
-            return isFloweringSeason_Subtropical(s);
-        }
+    private boolean isFloweringSeason(float s, float temp) {
+        return isTropical(temp)
+                ? (s >= 2.5f && s < 3.0f)   // tropical dry season bloom
+                : (s >= 0.0f && s < 1.0f); // subtropical spring bloom
     }
 
-    private boolean isDormantSeason(float s, float biomeTemp) {
-        if (isTropical(biomeTemp)) {
-            return isDormantSeason_Tropical(s);
-        } else {
-            return isDormantSeason_Subtropical(s);
-        }
+    private boolean isDormantSeason(float s, float temp) {
+        return isTropical(temp)
+                ? (s >= 1.5f && s < 2.5f)
+                : (s >= 3.0f && s < 4.0f);
     }
 
-    //Flowering seasons
-    private boolean isFloweringSeason_Tropical(float s) {
-        return (s >= 2.5f && s < 3f); //mid fall to winter (late dry season)
-    }
+    // =========================================================
+    // OVERLAY GENERATION
+    // =========================================================
 
-    private boolean isFloweringSeason_Subtropical(float s) {
-        return s >= 0.0f && s < 1.0f; //spring
-    }
+    private List<BakedQuad> createOverlay(List<BakedQuad> baseQuads,
+                                          TextureAtlasSprite texture) {
 
-    //Dormant seasons
-    private boolean isDormantSeason_Tropical(float s) {
-        return (s >= 1.5f && s < 2.5f); //mid summer to mid fall
-    }
+        List<BakedQuad> overlay = new ArrayList<>(baseQuads.size());
 
-    private boolean isDormantSeason_Subtropical(float s) {
-        return s >= 3.0f && s < 4.0f; //winter
-    }
-
-    private List<BakedQuad> createBlossomOverlayQuads(Direction side, Random rand) {
-        List<BakedQuad> overlay = new ArrayList<>();
-
-        for (BakedQuad quad : baseModel.getQuads(null, side, rand)) {
-            overlay.add(retextureQuad(quad, blossomTexture));
+        for (BakedQuad quad : baseQuads) {
+            overlay.add(retextureQuad(quad, texture));
         }
 
         return overlay;
     }
 
-    private List<BakedQuad> createDormantOverlayQuads(Direction side, Random rand) {
-        List<BakedQuad> overlay = new ArrayList<>();
-
-        for (BakedQuad quad : baseModel.getQuads(null, side, rand)) {
-            overlay.add(retextureQuad(quad, dormantTexture));
-        }
-
-        return overlay;
-    }
+    // =========================================================
+    // TEXTURE SWAP (CORE LOGIC)
+    // =========================================================
 
     private BakedQuad retextureQuad(BakedQuad quad, TextureAtlasSprite newSprite) {
-        int[] data = quad.getVertices().clone();
 
+        int[] data = quad.getVertexData().clone();
         TextureAtlasSprite oldSprite = quad.getSprite();
 
-        // Each vertex = 8 ints
         for (int i = 0; i < 4; i++) {
+
             int index = i * 8;
 
             float u = Float.intBitsToFloat(data[index + 4]);
             float v = Float.intBitsToFloat(data[index + 5]);
 
-            // Convert from old sprite space → normalized (0–1)
-            float un = (u - oldSprite.getU0()) / (oldSprite.getU1() - oldSprite.getU0());
-            float vn = (v - oldSprite.getV0()) / (oldSprite.getV1() - oldSprite.getV0());
+            float un = oldSprite.getInterpolatedU(u);
+            float vn = oldSprite.getInterpolatedV(v);
 
-            // Apply to new sprite
-            float newU = newSprite.getU(un * 16f);
-            float newV = newSprite.getV(vn * 16f);
+            float newU = newSprite.getInterpolatedU(un);
+            float newV = newSprite.getInterpolatedV(vn);
 
             data[index + 4] = Float.floatToRawIntBits(newU);
             data[index + 5] = Float.floatToRawIntBits(newV);
@@ -140,39 +155,43 @@ public class SeasonalIpeLeavesModel implements IBakedModel {
         return new BakedQuad(
                 data,
                 quad.getTintIndex(),
-                quad.getDirection(),
+                quad.getFace(),
                 newSprite,
-                quad.isShade()
+                quad.applyDiffuseLighting()
         );
     }
 
+    // =========================================================
+    // REQUIRED MODEL METHODS
+    // =========================================================
+
     @Override
     public boolean isAmbientOcclusion() {
-        return false;
+        return baseModel.isAmbientOcclusion();
     }
 
     @Override
     public boolean isGui3d() {
-        return false;
+        return baseModel.isGui3d();
     }
 
     @Override
     public boolean isSideLit() {
-        return false;
+        return baseModel.isSideLit();
     }
 
     @Override
     public boolean isBuiltInRenderer() {
-        return false;
+        return baseModel.isBuiltInRenderer();
     }
 
     @Override
     public TextureAtlasSprite getParticleTexture() {
-        return null;
+        return baseModel.getParticleTexture();
     }
 
     @Override
     public ItemOverrideList getOverrides() {
-        return null;
+        return baseModel.getOverrides();
     }
 }
