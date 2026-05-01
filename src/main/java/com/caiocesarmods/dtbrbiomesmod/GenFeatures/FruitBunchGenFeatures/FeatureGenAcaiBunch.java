@@ -15,12 +15,12 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 
-public class AcaiBunchGenerator extends GenFeature {
+public class FeatureGenAcaiBunch extends GenFeature {
 
     public static final ConfigurationProperty<Fruit> FRUIT =
             ConfigurationProperty.property("fruit", Fruit.class);
 
-    public AcaiBunchGenerator(ResourceLocation registryName) {
+    public FeatureGenAcaiBunch(ResourceLocation registryName) {
         super(registryName);
     }
 

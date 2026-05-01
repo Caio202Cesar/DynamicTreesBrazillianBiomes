@@ -1,14 +1,14 @@
 package com.caiocesarmods.dtbrbiomesmod.GenFeatures;
 
 import com.caiocesarmods.dtbrbiomesmod.BrazillianBiomesDTAddon;
-import com.caiocesarmods.dtbrbiomesmod.GenFeatures.FruitBunchGenFeatures.AcaiBunchGenerator;
+import com.caiocesarmods.dtbrbiomesmod.GenFeatures.FruitBunchGenFeatures.FeatureGenAcaiBunch;
 import com.ferreusveritas.dynamictrees.api.registry.Registry;
 import com.ferreusveritas.dynamictrees.systems.genfeatures.GenFeature;
 import net.minecraft.util.ResourceLocation;
 
 public class DTBrazillianBiomesGenFeatures {
 
-    public static GenFeature ACAI_BUNCH_FEATURE = new AcaiBunchGenerator(
+    public static GenFeature ACAI_BUNCH_FEATURE = new FeatureGenAcaiBunch(
             new ResourceLocation(BrazillianBiomesDTAddon.MOD_ID,"acai_bunch")
     );
 
