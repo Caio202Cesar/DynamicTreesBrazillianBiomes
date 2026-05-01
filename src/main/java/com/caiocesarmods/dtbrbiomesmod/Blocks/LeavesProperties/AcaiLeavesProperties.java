@@ -1,5 +1,6 @@
 package com.caiocesarmods.dtbrbiomesmod.Blocks.LeavesProperties;
 
+import com.caiocesarmods.dtbrbiomesmod.Blocks.FruitBlocks.AcaiFruitBlock;
 import com.ferreusveritas.dynamictrees.api.registry.TypedRegistry;
 import com.ferreusveritas.dynamictrees.blocks.leaves.DynamicLeavesBlock;
 import com.ferreusveritas.dynamictrees.blocks.leaves.LeavesProperties;

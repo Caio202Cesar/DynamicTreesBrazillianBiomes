@@ -7,8 +7,8 @@ import net.minecraft.block.LeavesBlock;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 
-public class AcaiFruitBlock extends FruitBlock {
-    public AcaiFruitBlock(Properties properties, Fruit fruit) {
+public class ButiaFruitBlock extends FruitBlock {
+    public ButiaFruitBlock(Properties properties, Fruit fruit) {
         super(properties, fruit);
     }
 
