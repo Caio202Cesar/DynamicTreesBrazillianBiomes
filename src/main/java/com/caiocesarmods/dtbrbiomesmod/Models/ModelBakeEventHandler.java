@@ -1,6 +1,7 @@
-package com.caiocesarmods.dtbrbiomesmod.Models.baked_models;
+package com.caiocesarmods.dtbrbiomesmod.Models;
 
 import com.caiocesarmods.dtbrbiomesmod.BrazillianBiomesDTAddon;
+import com.caiocesarmods.dtbrbiomesmod.Models.baked_models.PalmFrondsBakedModel;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ModelBakeEvent;

@@ -1,5 +1,6 @@
-package com.caiocesarmods.dtbrbiomesmod.Models.baked_models;
+package com.caiocesarmods.dtbrbiomesmod.Models;
 
+import com.caiocesarmods.dtbrbiomesmod.Models.baked_models.PalmFrondsBakedModel;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.client.renderer.model.*;
 import net.minecraft.client.renderer.texture.AtlasTexture;

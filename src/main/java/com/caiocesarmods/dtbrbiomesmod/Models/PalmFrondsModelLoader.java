@@ -1,4 +1,4 @@
-package com.caiocesarmods.dtbrbiomesmod.Models.baked_models;
+package com.caiocesarmods.dtbrbiomesmod.Models;
 
 import net.minecraftforge.client.model.IModelLoader;
 
@@ -8,7 +8,6 @@ import net.minecraft.client.renderer.texture.MissingTextureSprite;
 import net.minecraft.resources.IResourceManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.ResourceLocationException;
-import net.minecraftforge.client.model.IModelLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
