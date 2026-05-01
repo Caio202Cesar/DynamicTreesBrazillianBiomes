@@ -16,9 +16,9 @@ public class ModelBakeEventHandler {
     @SubscribeEvent
     public static void onModelRegistryEvent(ModelRegistryEvent event) {
         ModelLoaderRegistry.registerLoader(new ResourceLocation(BrazillianBiomesDTAddon.MOD_ID, "palm_fronds"),
-                new PalmFrondsModelLoader());
+                new PalmFrondsModelLoader(1));
         ModelLoaderRegistry.registerLoader(new ResourceLocation(BrazillianBiomesDTAddon.MOD_ID, "medium_palm_fronds"),
-                new PalmFrondsModelLoader());
+                new PalmFrondsModelLoader(2));
     }
 
     @SubscribeEvent

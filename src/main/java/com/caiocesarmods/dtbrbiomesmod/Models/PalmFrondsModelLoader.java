@@ -18,6 +18,12 @@ public class PalmFrondsModelLoader implements IModelLoader<PalmFrondsModelGeomet
     private static final String FROND = "frond";
     private static final String TEXTURES = "textures";
 
+    private int frondType;
+
+    public PalmFrondsModelLoader (int type){
+        frondType = type;
+    }
+
     @Override
     public void onResourceManagerReload(IResourceManager resourceManager) { }
 
