@@ -1,3 +1,6 @@
 {
-  "primitive_leaves":"brbiomesmod:white_ipe_leaves"
+  "primitive_leaves":"brbiomesmod:white_ipe_leaves",
+  "cell_kit": "dynamictrees:deciduous",
+  "smother": 1,
+  "light_requirement": 13
 }
