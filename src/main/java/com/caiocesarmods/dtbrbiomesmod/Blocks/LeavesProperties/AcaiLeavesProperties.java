@@ -32,6 +32,7 @@ public class AcaiLeavesProperties extends PalmLeavesProperties {
                     downState.onNeighborChange(world, pos.down(offset), pos.down(offset).up());
                 }
             }
+            /*
             @Override
             public void destroy(IWorld world, BlockPos pos, BlockState state) {
                 updateFruit(world, pos, 2);
@@ -55,5 +56,5 @@ public class AcaiLeavesProperties extends PalmLeavesProperties {
                 }
             }
         };
-    }
-}
+    }*/
+};}}
