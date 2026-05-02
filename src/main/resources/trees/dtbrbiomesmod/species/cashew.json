@@ -1,7 +1,7 @@
 {
   "family": "dtbrbiomesmod:cashew",
   "tapering": 1.0,
-  "signal_energy": 4.0,
+  "signal_energy": 10.0,
   "up_probability": 1,
   "soil_longevity": 20,
   "growth_rate": 0.4,

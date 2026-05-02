@@ -1,4 +1,5 @@
 {
   "primitive_leaves": "brbiomesmod:cashew_leaves",
-  "cell_kit": "dynamictrees:acacia"
+  "cell_kit": "dynamictrees:acacia",
+  "generate_block": true
 }
