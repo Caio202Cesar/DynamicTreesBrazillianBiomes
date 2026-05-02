@@ -1,0 +1,8 @@
+{
+  "type": "dtbrbiomesmod:podocarpus",
+  "common_leaves": "dtbrbiomesmod:podocarpus",
+  "common_species": "dtbrbiomesmod:podocarpus",
+  "primitive_log": "brbiomesmod:podocarpus_lambertii_log",
+  "primitive_stripped_log": "brbiomesmod:stripped_podocarpus_lambertii_log",
+  "max_branch_radius": 16
+}
