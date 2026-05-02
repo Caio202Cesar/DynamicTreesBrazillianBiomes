@@ -5,13 +5,11 @@ import com.ferreusveritas.dynamictrees.api.registry.TypeRegistryEvent;
 import com.ferreusveritas.dynamictrees.blocks.leaves.LeavesProperties;
 import com.ferreusveritas.dynamictrees.trees.Family;
 import com.ferreusveritas.dynamictrees.trees.Species;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
-public class DTBrazillianBiomesRegistries {
+public class BrazillianBiomesDTRegistries {
 
     public static void setup() {
 
@@ -19,7 +17,8 @@ public class DTBrazillianBiomesRegistries {
 
     @SubscribeEvent
     public static void registerLeavesPropertiesTypes(final TypeRegistryEvent<LeavesProperties> event) {
-        event.registerType(BrazillianBiomesDTAddon.resLoc("podocarpus_lambertii"), PodocarpusLeavesProperties.TYPE);
+        event.registerType(BrazillianBiomesDTAddon.resLoc("podocarpus"), PodocarpusLeavesProperties.TYPE);
+
     }
 
     @SubscribeEvent

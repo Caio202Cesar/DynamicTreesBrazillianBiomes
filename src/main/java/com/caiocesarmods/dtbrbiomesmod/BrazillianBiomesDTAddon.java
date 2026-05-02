@@ -3,7 +3,6 @@ package com.caiocesarmods.dtbrbiomesmod;
 import com.ferreusveritas.dynamictrees.api.GatherDataHelper;
 import com.ferreusveritas.dynamictrees.api.registry.RegistryHandler;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
@@ -37,7 +36,7 @@ public class BrazillianBiomesDTAddon {
 
         RegistryHandler.setup(MOD_ID);
 
-        DTBrazillianBiomesRegistries.setup();
+        BrazillianBiomesDTRegistries.setup();
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
