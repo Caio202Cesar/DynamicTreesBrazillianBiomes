@@ -1,4 +1,4 @@
-package com.caiocesarmods.dtbrbiomesmod.GenFeatures;
+/*package com.caiocesarmods.dtbrbiomesmod.GenFeatures;
 
 import com.caiocesarmods.dtbrbiomesmod.util.RegisterFinderUtil;
 import com.ferreusveritas.dynamictrees.api.TreeHelper;
@@ -127,4 +127,4 @@ public class FeatureGenJabuticabaFloweringBranch extends GenFeature {
         });
         return newBranchState[0];
     }
-}
+}*/
