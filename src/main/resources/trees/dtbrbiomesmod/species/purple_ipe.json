@@ -5,6 +5,5 @@
   "up_probability": 4,
   "lowest_branch_height": 3,
   "growth_rate": 0.8,
-  "leaves_properties": "dtbrbiomesmod:purple_ipe",
-  "seed": "dtbrbiomesmod:purple_ipe_seed"
+  "leaves_properties": "dtbrbiomesmod:purple_ipe"
 }
