@@ -1,0 +1,7 @@
+{
+  "parent": "dynamictrees:item/branch",
+  "textures": {
+    "bark": "brbiomesmod:block/podocarpus_lambertii_log",
+    "rings": "brbiomesmod:block/podocarpus_lambertii_log_top"
+  }
+}

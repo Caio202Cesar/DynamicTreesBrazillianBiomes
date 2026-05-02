@@ -1,0 +1,8 @@
+{
+  "parent": "dynamictrees:block/smartmodel/sapling",
+  "textures": {
+    "particle": "brbiomesmod:block/podocarpus_lambertii_leaves",
+    "log": "brbiomesmod:block/podocarpus_lambertii_log",
+    "leaves": "brbiomesmod:block/podocarpus_lambertii_leaves"
+  }
+}

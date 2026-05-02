@@ -1,0 +1,6 @@
+{
+  "parent":"dynamictrees:item/standard_seed",
+  "textures": {
+    "layer0":"dtbrbiomesmod:item/podocarpus_lambertii_seed"
+  }
+}
