@@ -1,0 +1,7 @@
+{
+  "common_leaves": "dtbrbiomesmod:ipe",
+  "common_species": "dtbrbiomesmod:kapok",
+  "primitive_log": "brbiomesmod:ipe_log",
+  "primitive_stripped_log": "brbiomesmod:ipe_log",
+  "max_branch_radius": 8
+}
