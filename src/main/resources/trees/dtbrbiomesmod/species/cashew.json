@@ -6,5 +6,6 @@
   "soil_longevity": 20,
   "growth_rate": 0.4,
   "lowest_branch_height": 17,
-  "max_branch_radius": 24
+  "max_branch_radius": 24,
+  "leaves_properties": "dtbrbiomesmod:cashew"
 }
