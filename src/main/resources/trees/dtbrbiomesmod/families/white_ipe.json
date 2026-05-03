@@ -1,4 +1,5 @@
 {
+  "type": "dtbrbiomesmod:ipe",
   "common_leaves": "dtbrbiomesmod:white_ipe",
   "common_species": "dtbrbiomesmod:white_ipe",
   "primitive_log": "brbiomesmod:ipe_log",

@@ -1,7 +1,8 @@
 {
+  "type": "dtbrbiomesmod:cashew",
   "common_leaves": "dtbrbiomesmod:cashew",
   "common_species": "dtbrbiomesmod:cashew",
-  "primitive_log": "minecraft:oak_log",
-  "primitive_stripped_log": "minecraft:stripped_oak_log",
-  "max_branch_radius": 17
+  "primitive_log": "brbiomesmod:cashew_log",
+  "primitive_stripped_log": "brbiomesmod:stripped_cashew_log",
+  "max_branch_radius": 24
 }

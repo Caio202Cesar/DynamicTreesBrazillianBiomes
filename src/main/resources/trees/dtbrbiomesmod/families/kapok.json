@@ -1,4 +1,5 @@
 {
+  "type": "dtbrbiomesmod:kapok",
   "common_leaves": "dtbrbiomesmod:kapok",
   "common_species": "dtbrbiomesmod:kapok",
   "primitive_log": "brbiomesmod:kapok_log",
