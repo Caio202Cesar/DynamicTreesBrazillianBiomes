@@ -1,0 +1,7 @@
+{
+  "parent": "dynamictrees:item/branch",
+  "textures": {
+    "bark": "brbiomesmod:block/cashew_log",
+    "rings": "brbiomesmod:block/cashew_log_top"
+  }
+}

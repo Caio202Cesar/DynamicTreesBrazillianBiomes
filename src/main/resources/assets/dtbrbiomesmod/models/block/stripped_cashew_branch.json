@@ -1,0 +1,7 @@
+{
+  "loader": "dynamictrees:branch",
+  "textures": {
+    "bark": "brbiomesmod:block/stripped_cashew_log",
+    "rings": "brbiomesmod:block/stripped_cashew_log_top"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "loader": "dynamictrees:branch",
+  "textures": {
+    "bark": "brbiomesmod:block/stripped_ipe_log",
+    "rings": "brbiomesmod:block/stripped_ipe_log_top"
+  }
+}
