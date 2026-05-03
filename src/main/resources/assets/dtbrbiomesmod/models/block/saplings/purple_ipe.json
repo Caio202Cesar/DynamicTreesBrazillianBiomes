@@ -1,8 +1,8 @@
 {
   "parent": "dynamictrees:block/smartmodel/sapling",
   "textures": {
-    "particle": "brbiomesmod:block/ipe_leaves",
+    "particle": "brbiomesmod:block/purple_ipe_leaves",
     "log": "brbiomesmod:block/ipe_log",
-    "leaves": "brbiomesmod:block/ipe_leaves"
+    "leaves": "brbiomesmod:block/purple_ipe_leaves"
   }
 }
