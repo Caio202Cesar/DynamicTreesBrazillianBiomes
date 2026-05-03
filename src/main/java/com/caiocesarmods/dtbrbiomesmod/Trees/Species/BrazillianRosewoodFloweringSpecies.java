@@ -1,4 +1,4 @@
-package com.caiocesarmods.dtbrbiomesmod.Trees.Species;
+/*package com.caiocesarmods.dtbrbiomesmod.Trees.Species;
 
 import com.ferreusveritas.dynamictrees.api.registry.TypedRegistry;
 import com.ferreusveritas.dynamictrees.blocks.leaves.LeavesProperties;
@@ -10,7 +10,7 @@ import net.minecraft.world.IBlockReader;
 
 import java.util.Random;
 
-/*public class BrazillianRosewoodFloweringSpecies extends Species {
+public class BrazillianRosewoodFloweringSpecies extends Species {
     public static final TypedRegistry.EntryType<Species> TYPE = createDefaultType(BrazillianRosewoodFloweringSpecies::new);
 
     public BrazillianRosewoodFloweringSpecies(ResourceLocation name, Family family, LeavesProperties leavesProperties) {

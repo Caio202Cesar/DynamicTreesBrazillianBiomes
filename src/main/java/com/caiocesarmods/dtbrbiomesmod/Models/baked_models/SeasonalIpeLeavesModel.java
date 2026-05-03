@@ -1,4 +1,4 @@
-package com.caiocesarmods.dtbrbiomesmod.Models.baked_models;
+/*package com.caiocesarmods.dtbrbiomesmod.Models.baked_models;
 
 import com.ferreusveritas.dynamictrees.compat.seasons.SeasonHelper;
 import net.minecraft.block.BlockState;
@@ -194,4 +194,4 @@ public class SeasonalIpeLeavesModel implements IBakedModel {
     public ItemOverrideList getOverrides() {
         return baseModel.getOverrides();
     }
-}
+}*/

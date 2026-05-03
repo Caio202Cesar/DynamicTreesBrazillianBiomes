@@ -1,4 +1,4 @@
-package com.caiocesarmods.dtbrbiomesmod.Models;
+/*package com.caiocesarmods.dtbrbiomesmod.Models;
 
 import com.caiocesarmods.dtbrbiomesmod.Models.baked_models.PalmFrondsBakedModel;
 import com.mojang.datafixers.util.Pair;
@@ -34,4 +34,4 @@ public class PalmFrondsModelGeometry implements IModelGeometry<PalmFrondsModelGe
         if (frondsResLoc == null) return new HashSet<>();
         return Collections.singleton(new RenderMaterial(AtlasTexture.LOCATION_BLOCKS_TEXTURE, frondsResLoc));
     }
-}
+}*/

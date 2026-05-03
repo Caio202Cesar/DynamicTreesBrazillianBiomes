@@ -1,4 +1,4 @@
-package com.caiocesarmods.dtbrbiomesmod.Models;
+/*package com.caiocesarmods.dtbrbiomesmod.Models;
 
 import com.caiocesarmods.dtbrbiomesmod.BrazillianBiomesDTAddon;
 import com.caiocesarmods.dtbrbiomesmod.Models.baked_models.PalmFrondsBakedModel;
@@ -94,4 +94,8 @@ public class ModelBakeEventHandler {
         BLOSSOM_TEXTURES.put("ipe_purple", "brbiomesmod:block/purple_ipe_blossom");
         DORMANT_TEXTURES.put("ipe_purple", "brbiomesmod:block/yellow_ipe_blossom");
     }
-}
+}*/
+
+
+
+

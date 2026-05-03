@@ -1,5 +1,5 @@
-package com.caiocesarmods.dtbrbiomesmod.Models.baked_models;
-/*
+/*package com.caiocesarmods.dtbrbiomesmod.Models.baked_models;
+
 import com.ferreusveritas.dynamictrees.blocks.leaves.PalmLeavesProperties;
 import com.ferreusveritas.dynamictrees.client.ModelUtils;
 import com.ferreusveritas.dynamictrees.util.CoordUtils;

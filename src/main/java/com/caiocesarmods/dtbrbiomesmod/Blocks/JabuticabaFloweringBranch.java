@@ -1,5 +1,5 @@
-package com.caiocesarmods.dtbrbiomesmod.Blocks;
-/*
+/*package com.caiocesarmods.dtbrbiomesmod.Blocks;
+
 import com.brbiomesmod.block.TreesGroup;
 import com.ferreusveritas.dynamictrees.blocks.branches.BasicBranchBlock;
 import com.ferreusveritas.dynamictrees.util.Optionals;

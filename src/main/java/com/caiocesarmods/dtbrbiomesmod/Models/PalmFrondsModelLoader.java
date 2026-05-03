@@ -1,4 +1,4 @@
-package com.caiocesarmods.dtbrbiomesmod.Models;
+/*package com.caiocesarmods.dtbrbiomesmod.Models;
 
 import net.minecraftforge.client.model.IModelLoader;
 
@@ -73,9 +73,9 @@ public class PalmFrondsModelLoader implements IModelLoader<PalmFrondsModelGeomet
 
     /**
      * @return The type of model the class is loading. Useful for warnings when using sub-classes.
-     */
+
     protected String getModelTypeName () {
         return "Palm Fronds";
     }
 
-}
+}*/
