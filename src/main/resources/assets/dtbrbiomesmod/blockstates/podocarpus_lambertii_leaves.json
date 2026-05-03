@@ -1,5 +1,6 @@
 {
   "variants": {
-    "": { "model": "brbiomesmod:block/podocarpus_lambertii_leaves" }
+    "": { "model": "brbiomesmod:block/podocarpus_lambertii_leaves"
+    }
   }
 }

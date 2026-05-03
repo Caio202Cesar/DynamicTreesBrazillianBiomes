@@ -1,6 +1,5 @@
 package com.caiocesarmods.dtbrbiomesmod;
 
-import com.caiocesarmods.dtbrbiomesmod.Blocks.LeavesProperties.PodocarpusLeavesProperties;
 import com.ferreusveritas.dynamictrees.api.registry.TypeRegistryEvent;
 import com.ferreusveritas.dynamictrees.blocks.leaves.LeavesProperties;
 import com.ferreusveritas.dynamictrees.trees.Family;
@@ -17,7 +16,6 @@ public class BrazillianBiomesDTRegistries {
 
     @SubscribeEvent
     public static void registerLeavesPropertiesTypes(final TypeRegistryEvent<LeavesProperties> event) {
-        event.registerType(BrazillianBiomesDTAddon.resLoc("podocarpus"), PodocarpusLeavesProperties.TYPE);
 
     }
 
