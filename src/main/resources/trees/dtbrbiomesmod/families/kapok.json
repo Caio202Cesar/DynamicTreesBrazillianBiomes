@@ -4,7 +4,5 @@
   "primitive_log": "brbiomesmod:kapok_log",
   "primitive_stripped_log": "brbiomesmod:kapok_log",
   "max_branch_radius": 24,
-  "generate_surface_root": true,
-  "primary_thickness": 2
-
+  "generate_surface_root": true
 }
