@@ -1,11 +1,11 @@
 {
   "family": "dtbrbiomesmod:cashew",
   "tapering": 1.0,
-  "signal_energy": 10.0,
-  "up_probability": 1,
+  "signal_energy": 12.0,
+  "up_probability": 0,
+  "lowest_branch_height": 3,
   "soil_longevity": 20,
   "growth_rate": 0.4,
-  "lowest_branch_height": 17,
   "max_branch_radius": 14,
   "leaves_properties": "dtbrbiomesmod:cashew"
 }
