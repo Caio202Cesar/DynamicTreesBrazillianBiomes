@@ -2,6 +2,10 @@ package com.caiocesarmods.dtbrbiomesmod;
 
 import com.ferreusveritas.dynamictrees.api.GatherDataHelper;
 import com.ferreusveritas.dynamictrees.api.registry.RegistryHandler;
+import com.ferreusveritas.dynamictrees.blocks.leaves.LeavesProperties;
+import com.ferreusveritas.dynamictrees.blocks.rootyblocks.SoilProperties;
+import com.ferreusveritas.dynamictrees.trees.Family;
+import com.ferreusveritas.dynamictrees.trees.Species;
 import net.minecraft.block.Block;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
@@ -17,6 +21,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.stream.Collectors;
+
+import static com.mojang.blaze3d.vertex.IVertexBuilder.LOGGER;
+import static net.minecraftforge.versions.forge.ForgeVersion.MOD_ID;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(BrazillianBiomesDTAddon.MOD_ID)
@@ -46,8 +53,14 @@ public class BrazillianBiomesDTAddon {
     private void clientSetup(final FMLClientSetupEvent event) {}
 
     public void gatherData(final GatherDataEvent event) {
-        GatherDataHelper.gatherTagData(MOD_ID, event);
-        GatherDataHelper.gatherLootData(MOD_ID, event);
+        GatherDataHelper.gatherAllData(
+                MOD_ID,
+                event,
+                SoilProperties.REGISTRY,
+                Family.REGISTRY,
+                Species.REGISTRY,
+                LeavesProperties.REGISTRY
+        );
     }
 
     public static ResourceLocation resLoc(final String path) {

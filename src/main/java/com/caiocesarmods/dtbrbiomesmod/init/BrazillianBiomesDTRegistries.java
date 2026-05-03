@@ -6,8 +6,10 @@ import com.caiocesarmods.dtbrbiomesmod.Trees.Family.IpeFamily;
 import com.caiocesarmods.dtbrbiomesmod.Trees.Family.KapokFamily;
 import com.ferreusveritas.dynamictrees.api.registry.TypeRegistryEvent;
 import com.ferreusveritas.dynamictrees.trees.Family;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class BrazillianBiomesDTRegistries {
@@ -19,4 +21,5 @@ public class BrazillianBiomesDTRegistries {
         event.registerType(BrazillianBiomesDTAddon.resLoc("ipe"), IpeFamily.TYPE);
 
     }
+
 }

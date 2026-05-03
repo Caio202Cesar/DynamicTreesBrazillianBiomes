@@ -1,8 +1,0 @@
-{
-  "type": "dtbrbiomesmod:ipe",
-  "common_leaves": "dtbrbiomesmod:pink_ipe",
-  "common_species": "dtbrbiomesmod:pink_ipe",
-  "primitive_log": "brbiomesmod:ipe_log",
-  "primitive_stripped_log": "brbiomesmod:ipe_log",
-  "max_branch_radius": 8
-}

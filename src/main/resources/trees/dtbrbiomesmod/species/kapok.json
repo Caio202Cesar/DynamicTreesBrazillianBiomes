@@ -1,7 +1,7 @@
 {
   "family": "dtbrbiomesmod:kapok",
   "mega_species": true,
-  "tapering": 1.0,
+  "tapering": 0.60,
   "signal_energy": 28.0,
   "up_probability": 1,
   "soil_longevity": 20,
