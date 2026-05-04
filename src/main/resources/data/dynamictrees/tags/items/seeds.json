@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "dtbrbiomesmod:cashew_seed",
+    "dtbrbiomesmod:kapok_seed",
+    "dtbrbiomesmod:pink_ipe_seed",
+    "dtbrbiomesmod:podocarpus_lambertii_seed",
+    "dtbrbiomesmod:purple_ipe_seed",
+    "dtbrbiomesmod:white_ipe_seed",
+    "dtbrbiomesmod:yellow_ipe_seed"
+  ]
+}

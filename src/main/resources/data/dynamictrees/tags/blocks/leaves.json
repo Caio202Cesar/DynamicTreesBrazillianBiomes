@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "dtbrbiomesmod:cashew_leaves",
+    "dtbrbiomesmod:kapok_leaves",
+    "dtbrbiomesmod:pink_ipe_leaves",
+    "dtbrbiomesmod:podocarpus_lambertii_leaves",
+    "dtbrbiomesmod:purple_ipe_leaves",
+    "dtbrbiomesmod:white_ipe_leaves",
+    "dtbrbiomesmod:yellow_ipe_leaves"
+  ]
+}
