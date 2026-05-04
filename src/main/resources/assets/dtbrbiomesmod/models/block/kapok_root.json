@@ -1,6 +1,6 @@
 {
   "loader": "dynamictrees:root",
   "textures": {
-    "bark": "dtbrbiomesmod:block/kapok_log"
+    "bark": "brbiomesmod:block/kapok_log"
   }
 }
