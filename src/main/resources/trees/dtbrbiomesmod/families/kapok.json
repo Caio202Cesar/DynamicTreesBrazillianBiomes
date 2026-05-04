@@ -2,7 +2,7 @@
   "common_leaves": "dtbrbiomesmod:kapok",
   "common_species": "dtbrbiomesmod:kapok",
   "primitive_log": "brbiomesmod:kapok_log",
-  "primitive_stripped_log": "brbiomesmod:kapok_log",
+  "primitive_stripped_log": "minecraft:stripped_jungle_log",
   "max_branch_radius": 24,
   "generate_surface_root": true
 }
