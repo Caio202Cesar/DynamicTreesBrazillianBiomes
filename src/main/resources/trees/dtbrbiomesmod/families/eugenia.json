@@ -1,0 +1,7 @@
+{
+  "common_leaves": "dtbrbiomesmod:pitanga",
+  "common_species": "dtbrbiomesmod:pitanga",
+  "primitive_log": "brbiomesmod:eugenia_log",
+  "primitive_stripped_log": "brbiomesmod:stripped_eugenia_log",
+  "max_branch_radius": 8
+}
