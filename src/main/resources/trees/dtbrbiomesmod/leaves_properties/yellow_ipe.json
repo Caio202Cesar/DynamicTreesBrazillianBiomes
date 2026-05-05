@@ -1,6 +1,4 @@
 {
-  "primitive_leaves": "brbiomesmod:yellow_ipe_leaves",
-  "cell_kit": "dynamictrees:deciduous",
-  "smother": 2,
-  "light_requirement": 13
+  "primitive_leaves": "brbiomesmod:yellow_ipe_leaves"
+
 }
