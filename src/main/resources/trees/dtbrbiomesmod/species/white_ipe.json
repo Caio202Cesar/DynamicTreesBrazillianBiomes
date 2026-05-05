@@ -3,7 +3,7 @@
   "tapering": 0.2,
   "signal_energy": 8.0,
   "up_probability": 0.8,
-  "lowest_branch_height": 3,
+  "lowest_branch_height": 2,
   "growth_rate": 0.3,
   "leaves_properties": "dtbrbiomesmod:white_ipe",
   "generate_seed": true,

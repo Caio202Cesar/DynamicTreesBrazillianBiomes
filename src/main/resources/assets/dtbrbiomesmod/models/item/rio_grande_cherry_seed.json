@@ -1,0 +1,6 @@
+{
+  "parent":"dynamictrees:item/standard_seed",
+  "textures": {
+    "layer0":"dtbrbiomesmod:item/rio_grande_cherry_seed"
+  }
+}
