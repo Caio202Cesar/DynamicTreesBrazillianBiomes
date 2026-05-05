@@ -1,0 +1,7 @@
+{
+  "loader": "dynamictrees:branch",
+  "textures": {
+    "bark": "brbiomesmod:block/eugenia_log",
+    "rings": "brbiomesmod:block/eugenia_log_top"
+  }
+}

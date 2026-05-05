@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "age=0": { "model": "brbiomesmod:block/pitanga_leaves" },
+    "age=1": { "model": "brbiomesmod:block/pitanga_flowering_leaves" },
+    "age=2": { "model": "brbiomesmod:block/pitanga_leaves" },
+    "age=3": { "model": "brbiomesmod:block/pitanga_fruiting_leaves" }
+  }
+}
