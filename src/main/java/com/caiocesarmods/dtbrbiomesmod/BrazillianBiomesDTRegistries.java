@@ -1,7 +1,10 @@
 package com.caiocesarmods.dtbrbiomesmod;
 
+import com.caiocesarmods.dtbrbiomesmod.systems.genfeatures.SeasonalAlternativeLeavesGenFeature;
+import com.ferreusveritas.dynamictrees.DynamicTrees;
 import com.ferreusveritas.dynamictrees.api.registry.TypeRegistryEvent;
 import com.ferreusveritas.dynamictrees.blocks.leaves.LeavesProperties;
+import com.ferreusveritas.dynamictrees.systems.genfeatures.GenFeature;
 import com.ferreusveritas.dynamictrees.trees.Family;
 import com.ferreusveritas.dynamictrees.trees.Species;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -27,6 +30,11 @@ public class BrazillianBiomesDTRegistries {
     @SubscribeEvent
     public static void registerSpecies(final TypeRegistryEvent<Species> event) {
 
+    }
+
+    @SubscribeEvent
+    public static void onGenFeatureRegistry(final com.ferreusveritas.dynamictrees.api.registry.RegistryEvent<GenFeature> event) {
+        event.;
     }
 
 }
