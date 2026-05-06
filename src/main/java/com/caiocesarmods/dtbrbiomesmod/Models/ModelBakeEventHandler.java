@@ -1,28 +1,13 @@
-/*package com.caiocesarmods.dtbrbiomesmod.Models;
+package com.caiocesarmods.dtbrbiomesmod.Models;
 
 import com.caiocesarmods.dtbrbiomesmod.BrazillianBiomesDTAddon;
-import com.caiocesarmods.dtbrbiomesmod.Models.baked_models.PalmFrondsBakedModel;
-import com.caiocesarmods.dtbrbiomesmod.Models.baked_models.SeasonalIpeLeavesModel;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.model.IBakedModel;
-import net.minecraft.client.renderer.model.ModelResourceLocation;
-import net.minecraft.client.renderer.texture.AtlasTexture;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.ModelBakeEvent;
-import net.minecraftforge.client.event.ModelRegistryEvent;
-import net.minecraftforge.client.model.ModelLoaderRegistry;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Mod.EventBusSubscriber(modid = BrazillianBiomesDTAddon.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ModelBakeEventHandler {
 
-    @SubscribeEvent
+    /*@SubscribeEvent
     public static void onModelRegistryEvent(ModelRegistryEvent event) {
         ModelLoaderRegistry.registerLoader(new ResourceLocation(BrazillianBiomesDTAddon.MOD_ID, "palm_fronds"),
                 new PalmFrondsModelLoader(1));
@@ -93,8 +78,8 @@ public class ModelBakeEventHandler {
         // 💜 Ipê Roxo (Purple)
         BLOSSOM_TEXTURES.put("ipe_purple", "brbiomesmod:block/purple_ipe_blossom");
         DORMANT_TEXTURES.put("ipe_purple", "brbiomesmod:block/yellow_ipe_blossom");
-    }
-}*/
+    }*/
+}
 
 
 

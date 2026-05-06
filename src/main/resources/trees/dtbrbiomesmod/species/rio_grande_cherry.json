@@ -14,5 +14,15 @@
       "sapling_item": "brbiomesmod:rio_grande_cherry",
       "can_craft_seed_to_sapling": false
     }
+  ],
+  "features" : [
+    {
+      "name": "dynamictrees:alternative_leaves",
+      "properties": {
+        "alternative_leaves": "dtbrbiomesmod:rio_grande_cherry_flowering",
+        "place_chance": 0.3,
+        "quantity": 10
+      }
+    }
   ]
 }
