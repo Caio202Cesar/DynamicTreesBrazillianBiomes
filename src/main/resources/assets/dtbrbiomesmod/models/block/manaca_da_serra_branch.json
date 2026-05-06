@@ -1,0 +1,7 @@
+{
+  "loader": "dynamictrees:branch",
+  "textures": {
+    "bark": "brbiomesmod:block/manaca_log",
+    "rings": "brbiomesmod:block/manaca_log_top"
+  }
+}
