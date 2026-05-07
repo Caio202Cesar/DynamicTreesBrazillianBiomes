@@ -28,8 +28,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SeasonalAlternativeLeavesGenFeature extends GenFeature {
 
-    public static final ConfigurationProperty<LeavesProperties> ALT_LEAVES = ConfigurationProperty.property("seasonal_alternative_leaves", LeavesProperties.class);
-    public static final ConfigurationProperty<Block> ALT_LEAVES_BLOCK = ConfigurationProperty.block("seasonal_alternative_leaves_block");
+    public static final ConfigurationProperty<LeavesProperties> SEASONAL_ALT_LEAVES = ConfigurationProperty.property("seasonal_alternative_leaves", LeavesProperties.class);
+    public static final ConfigurationProperty<Block> SEASONAL_ALT_LEAVES_BLOCK = ConfigurationProperty.block("seasonal_alternative_leaves_block");
 
     public static final TypedRegistry.EntryType<GenFeature> TYPE = TypedRegistry.newType(SeasonalAlternativeLeavesGenFeature::new);
 
@@ -39,17 +39,17 @@ public class SeasonalAlternativeLeavesGenFeature extends GenFeature {
 
     @Override
     protected void registerProperties() {
-        this.register(ALT_LEAVES, ALT_LEAVES_BLOCK, PLACE_CHANCE, QUANTITY);
+        this.register(SEASONAL_ALT_LEAVES, SEASONAL_ALT_LEAVES_BLOCK, PLACE_CHANCE, QUANTITY);
     }
 
     public GenFeatureConfiguration createDefaultConfiguration() {
-        return super.createDefaultConfiguration().with(ALT_LEAVES, LeavesProperties.NULL).with(ALT_LEAVES_BLOCK, Blocks.AIR)
+        return super.createDefaultConfiguration().with(SEASONAL_ALT_LEAVES, LeavesProperties.NULL).with(SEASONAL_ALT_LEAVES_BLOCK, Blocks.AIR)
                 .with(PLACE_CHANCE, 0.5f).with(QUANTITY, 5);
     }
 
     @Override
     public boolean shouldApply(Species species, GenFeatureConfiguration configuration) {
-        configuration.get(ALT_LEAVES).ifValid(properties -> {
+        configuration.get(SEASONAL_ALT_LEAVES).ifValid(properties -> {
             properties.setFamily(species.getFamily());
             species.addValidLeafBlocks(properties);
         });
@@ -85,9 +85,9 @@ public class SeasonalAlternativeLeavesGenFeature extends GenFeature {
     }
 
     private Block getAltLeavesBlock(GenFeatureConfiguration conifuration) {
-        LeavesProperties properties = conifuration.get(ALT_LEAVES);
+        LeavesProperties properties = conifuration.get(SEASONAL_ALT_LEAVES);
         if (!properties.isValid() || !properties.getDynamicLeavesBlock().isPresent()) {
-            return conifuration.get(ALT_LEAVES_BLOCK);
+            return conifuration.get(SEASONAL_ALT_LEAVES_BLOCK);
         }
         return properties.getDynamicLeavesBlock().get();
     }
