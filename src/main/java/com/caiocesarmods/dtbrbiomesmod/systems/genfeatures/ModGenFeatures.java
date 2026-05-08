@@ -7,7 +7,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class ModGenFeatures {
 
-    public static final GenFeature SEASONAL_ALTERNATIVE_LEAVES = new SeasonalAlternativeLeavesGenFeature(regName("seasonal_alt_leaves"));
+    /*public static final GenFeature SEASONAL_ALTERNATIVE_LEAVES = new SeasonalAlternativeLeavesGenFeature(regName("seasonal_alt_leaves"));
 
     private static ResourceLocation regName(String name) {
         return new ResourceLocation(BrazillianBiomesDTAddon.MOD_ID, name);
@@ -15,5 +15,5 @@ public class ModGenFeatures {
 
     public static void register(final Registry<GenFeature> registry) {
         registry.registerAll(SEASONAL_ALTERNATIVE_LEAVES);
-    }
+    }*/
 }

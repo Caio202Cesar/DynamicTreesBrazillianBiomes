@@ -37,16 +37,18 @@ public class BrazillianBiomesDTRegistries {
     }
 
     @SubscribeEvent
-    public static void onGenFeatureRegistry(final com.ferreusveritas.dynamictrees.api.registry.RegistryEvent<GenFeature> event) {
-        ModGenFeatures.register(event.getRegistry());
-
-    }
-
-    @SubscribeEvent
     public static void onReload(AddReloadListenerEvent event) {
 
         event.addListener(
                 new SeasonalLeafReloadListener()
         );
+    }
+
+    @SubscribeEvent
+    public static void onGenFeatureRegistry(final com.ferreusveritas.dynamictrees.api.registry.RegistryEvent<GenFeature> event) {
+        event.getRegistry().register(new SeasonalAlternativeLeavesGenFeature(BrazillianBiomesDTAddon.resLoc("seasonal_alt_leaves")));
+
+        //ModGenFeatures.register(event.getRegistry());
+
     }
 }
