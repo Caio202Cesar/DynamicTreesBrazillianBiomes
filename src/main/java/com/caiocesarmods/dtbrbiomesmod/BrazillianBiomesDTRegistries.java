@@ -31,10 +31,4 @@ public class BrazillianBiomesDTRegistries {
     public static void registerSpecies(final TypeRegistryEvent<Species> event) {
 
     }
-
-    @SubscribeEvent
-    public static void onGenFeatureRegistry(final com.ferreusveritas.dynamictrees.api.registry.RegistryEvent<GenFeature> event) {
-        event.getRegistry().register(SeasonalAlternativeLeavesGenFeature.NULL);
-    }
-
 }

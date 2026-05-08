@@ -1,7 +1,5 @@
 {
-  "variants": [
-    { "model": "brbiomesmod:block/pitanga_leaves" },
-    { "model": "brbiomesmod:block/pitanga_flowering_leaves" },
-    { "model": "brbiomesmod:block/pitanga_fruiting_leaves" }
-  ]
+  "variants": {
+    "": { "model": "brbiomesmod:block/pitanga_leaves" }
+  }
 }
