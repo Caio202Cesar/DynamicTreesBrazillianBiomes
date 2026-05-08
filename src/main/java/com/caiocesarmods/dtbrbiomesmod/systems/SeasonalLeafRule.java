@@ -15,6 +15,5 @@ public class SeasonalLeafRule {
     // Base probability multiplier
     public float chance = 1.0F;
 
-    public ResourceLocation leaves;
-
+    public ResourceLocation leaves_properties;
 }

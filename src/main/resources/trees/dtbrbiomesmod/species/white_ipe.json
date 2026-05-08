@@ -7,5 +7,14 @@
   "growth_rate": 0.3,
   "leaves_properties": "dtbrbiomesmod:white_ipe",
   "generate_seed": true,
-  "generate_sapling": true
+  "generate_sapling": true,
+  "features": [
+    {
+      "name": "dtbrbiomes:alt_leaves",
+      "properties": {
+        "alternative_leaves": "dtbrbiomesmod:rio_grande_cherry_flowering"
+      }
+    }
+  ]
 }
+

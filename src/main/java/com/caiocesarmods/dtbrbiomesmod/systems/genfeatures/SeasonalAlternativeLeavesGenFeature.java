@@ -4,7 +4,6 @@ import com.caiocesarmods.dtbrbiomesmod.systems.SeasonalLeafConfig;
 import com.caiocesarmods.dtbrbiomesmod.systems.SeasonalLeafRegistry;
 import com.caiocesarmods.dtbrbiomesmod.systems.SeasonalLeafRule;
 import com.ferreusveritas.dynamictrees.api.TreeHelper;
-import com.ferreusveritas.dynamictrees.api.configurations.ConfigurationProperty;
 import com.ferreusveritas.dynamictrees.api.network.MapSignal;
 import com.ferreusveritas.dynamictrees.api.registry.TypedRegistry;
 import com.ferreusveritas.dynamictrees.blocks.leaves.DynamicLeavesBlock;
@@ -18,16 +17,12 @@ import com.ferreusveritas.dynamictrees.systems.nodemappers.FindEndsNode;
 import com.ferreusveritas.dynamictrees.trees.Species;
 import com.ferreusveritas.dynamictrees.util.BlockBounds;
 import com.ferreusveritas.dynamictrees.util.SafeChunkBounds;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.LeavesBlock;
-import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
-import net.minecraftforge.registries.ForgeRegistries;
+import com.ferreusveritas.dynamictrees.api.TreeRegistry;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -35,12 +30,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SeasonalAlternativeLeavesGenFeature extends GenFeature {
 
-    public static final ConfigurationProperty<LeavesProperties> SEASONAL_ALT_LEAVES =
-            ConfigurationProperty.property("seasonal_alternative_leaves", LeavesProperties.class);
-    public static final ConfigurationProperty<Block> SEASONAL_ALT_LEAVES_BLOCK =
-            ConfigurationProperty.block("seasonal_alternative_leaves_block");
-
-    public static final TypedRegistry.EntryType<GenFeature> TYPE = TypedRegistry.newType(SeasonalAlternativeLeavesGenFeature::new);
+    public static final TypedRegistry.EntryType<GenFeature> TYPE =
+            TypedRegistry.newType(SeasonalAlternativeLeavesGenFeature::new);
 
     public SeasonalAlternativeLeavesGenFeature(ResourceLocation registryName) {
         super(registryName);
@@ -50,8 +41,7 @@ public class SeasonalAlternativeLeavesGenFeature extends GenFeature {
     protected void registerProperties() {
 
         this.register(
-                SEASONAL_ALT_LEAVES,
-                SEASONAL_ALT_LEAVES_BLOCK,
+
                 PLACE_CHANCE,
                 QUANTITY
         );
@@ -61,50 +51,9 @@ public class SeasonalAlternativeLeavesGenFeature extends GenFeature {
     public GenFeatureConfiguration createDefaultConfiguration() {
 
         return super.createDefaultConfiguration()
-
-                .with(
-                        SEASONAL_ALT_LEAVES,
-                        LeavesProperties.NULL
-                )
-
-                .with(
-                        SEASONAL_ALT_LEAVES_BLOCK,
-                        Blocks.AIR
-                )
-
                 .with(PLACE_CHANCE, 0.5F)
-
                 .with(QUANTITY, 5);
     }
-
-    /*
-     * =========================================================
-     * SPECIES SETUP
-     * =========================================================
-     */
-
-    @Override
-    public boolean shouldApply(
-            Species species,
-            GenFeatureConfiguration configuration
-    ) {
-
-        configuration.get(SEASONAL_ALT_LEAVES).ifValid(properties -> {
-
-            properties.setFamily(species.getFamily());
-
-            species.addValidLeafBlocks(properties);
-
-        });
-
-        return true;
-    }
-
-    /*
-     * =========================================================
-     * POST GENERATION
-     * =========================================================
-     */
 
     @Override
     protected boolean postGenerate(
@@ -433,9 +382,6 @@ public class SeasonalAlternativeLeavesGenFeature extends GenFeature {
                                     - rule.peak_season
                     );
 
-            /*
-             * Wrap around season cycle
-             */
             distance =
                     Math.min(distance, 4F - distance);
 
@@ -464,16 +410,30 @@ public class SeasonalAlternativeLeavesGenFeature extends GenFeature {
             return currentState;
         }
 
-        Block block =
-                ForgeRegistries.BLOCKS.getValue(
-                        bestRule.leaves
+        LeavesProperties properties =
+                LeavesProperties.REGISTRY.get(
+                        bestRule.leaves_properties
                 );
 
-        if (block == null) {
+        if (properties == null
+                || !properties.isValid()
+                || !properties.getDynamicLeavesBlock().isPresent()) {
+
             return currentState;
         }
 
-        return block.getDefaultState();
+        DynamicLeavesBlock dynamicLeaves =
+                properties.getDynamicLeavesBlock().get();
+
+        int leafDistance = 1;
+
+        if (currentState.hasProperty(LeavesBlock.DISTANCE)) {
+            leafDistance =
+                    currentState.get(LeavesBlock.DISTANCE);
+        }
+
+        return dynamicLeaves.properties
+                .getDynamicLeavesState(leafDistance);
     }
 
     /*
@@ -484,88 +444,6 @@ public class SeasonalAlternativeLeavesGenFeature extends GenFeature {
 
     private float worldRandomFloat(IWorld world) {
         return world.getRandom().nextFloat();
-    }
-
-    /*
-     * =========================================================
-     * ALT LEAVES BLOCK HELPERS
-     * =========================================================
-     */
-
-    private Block getAltLeavesBlock(
-            GenFeatureConfiguration configuration
-    ) {
-
-        LeavesProperties properties =
-                configuration.get(SEASONAL_ALT_LEAVES);
-
-        if (!properties.isValid()
-                || !properties
-                .getDynamicLeavesBlock()
-                .isPresent()) {
-
-            return configuration.get(
-                    SEASONAL_ALT_LEAVES_BLOCK
-            );
-        }
-
-        return properties
-                .getDynamicLeavesBlock()
-                .get();
-    }
-
-    private BlockState getSwapBlockState(
-            GenFeatureConfiguration configuration,
-            IWorld world,
-            Species species,
-            BlockState state,
-            boolean worldgen
-    ) {
-
-        DynamicLeavesBlock originalLeaves =
-                species.getLeavesBlock()
-                        .orElse(null);
-
-        Block alt =
-                getAltLeavesBlock(configuration);
-
-        DynamicLeavesBlock altLeaves =
-                alt instanceof DynamicLeavesBlock
-                        ? (DynamicLeavesBlock) alt
-                        : null;
-
-        if (originalLeaves != null
-                && altLeaves != null) {
-
-            if (worldgen
-                    || world.getRandom().nextFloat()
-                    < configuration.get(PLACE_CHANCE)) {
-
-                if (state.getBlock() == originalLeaves) {
-
-                    return altLeaves.properties
-                            .getDynamicLeavesState(
-                                    state.get(
-                                            LeavesBlock.DISTANCE
-                                    )
-                            );
-                }
-
-            } else {
-
-                if (state.getBlock() == altLeaves) {
-
-                    return originalLeaves.properties
-                            .getDynamicLeavesState(
-                                    state.get(
-                                            LeavesBlock.DISTANCE
-                                    )
-                            );
-                }
-            }
-        }
-
-        return state;
     }
 }
 
