@@ -2,64 +2,56 @@ package com.caiocesarmods.dtbrbiomesmod.systems;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import net.minecraft.resources.IResource;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import net.minecraft.client.resources.JsonReloadListener;
+import net.minecraft.profiler.IProfiler;
 import net.minecraft.resources.IResourceManager;
 import net.minecraft.util.ResourceLocation;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-import java.util.Collection;
+import java.util.Map;
 
-public class SeasonalLeafReloadListener {
+public class SeasonalLeafReloadListener extends JsonReloadListener {
 
     private static final Gson GSON =
-            new GsonBuilder().setPrettyPrinting().create();
+            new GsonBuilder().create();
 
-    public static void reload(IResourceManager manager) {
+    public SeasonalLeafReloadListener() {
+
+        super(
+                GSON,
+                "seasonal_leaves"
+        );
+    }
+
+    @Override
+    protected void apply(
+            Map<ResourceLocation, JsonElement> object,
+            IResourceManager resourceManager,
+            IProfiler profiler
+    ) {
 
         SeasonalLeafRegistry.clear();
 
-        try {
+        object.forEach((location, jsonElement) -> {
 
-            Collection<ResourceLocation> resources =
-                    manager.getAllResourceLocations(
-                            "seasonal_leaves",
-                            path -> path.endsWith(".json")
-                    );
+            try {
 
-            for (ResourceLocation resource : resources) {
+                JsonObject json =
+                        jsonElement.getAsJsonObject();
 
-                try {
+                SeasonalLeafConfig config =
+                        GSON.fromJson(
+                                json,
+                                SeasonalLeafConfig.class
+                        );
 
-                    IResource iResource =
-                            manager.getResource(resource);
+                SeasonalLeafRegistry.register(config);
 
-                    BufferedReader reader =
-                            new BufferedReader(
-                                    new InputStreamReader(
-                                            iResource.getInputStream(),
-                                            StandardCharsets.UTF_8
-                                    )
-                            );
+            } catch (Exception e) {
 
-                    SeasonalLeafConfig config =
-                            GSON.fromJson(
-                                    reader,
-                                    SeasonalLeafConfig.class
-                            );
-
-                    SeasonalLeafRegistry.register(config);
-
-                    reader.close();
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                e.printStackTrace();
             }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        });
     }
 }

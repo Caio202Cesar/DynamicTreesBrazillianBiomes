@@ -10,10 +10,62 @@
   "generate_sapling": true,
   "features": [
     {
-      "name": "dtbrbiomes:alt_leaves",
-      "properties": {
-        "alternative_leaves": "dtbrbiomesmod:rio_grande_cherry_flowering"
-      }
+      "name": "dtbrbiomes:seasonal_alt_leaves",
+      "rules": [
+
+        {
+          "peak_season": 0.2,
+          "fade": 0.45,
+
+          "temp_min": 0.7,
+          "temp_max": 2.0,
+
+          "chance": 0.9,
+
+          "leaves_properties":
+          "dtbrbiomesmod:rio_grande_cherry_flowering"
+        },
+
+        {
+          "peak_season": 1.8,
+          "fade": 0.5,
+
+          "temp_min": 1.0,
+          "temp_max": 2.0,
+
+          "chance": 0.5,
+
+          "leaves_properties":
+          "dtbrbiomesmod:rio_grande_cherry_dry"
+        },
+
+        {
+          "peak_season": 2.5,
+          "fade": 0.7,
+
+          "temp_min": -10.0,
+          "temp_max": 0.7,
+
+          "chance": 0.8,
+
+          "leaves_properties":
+          "dtbrbiomesmod:rio_grande_cherry_autumn"
+        },
+
+        {
+          "peak_season": 3.2,
+          "fade": 0.4,
+
+          "temp_min": -10.0,
+          "temp_max": 0.3,
+
+          "chance": 1.0,
+
+          "leaves_properties":
+          "dtbrbiomesmod:rio_grande_cherry_bare"
+        }
+
+      ]
     }
   ]
 }

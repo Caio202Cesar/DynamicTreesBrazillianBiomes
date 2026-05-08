@@ -22,7 +22,6 @@ import net.minecraft.block.LeavesBlock;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
-import com.ferreusveritas.dynamictrees.api.TreeRegistry;
 
 import java.util.LinkedList;
 import java.util.List;
