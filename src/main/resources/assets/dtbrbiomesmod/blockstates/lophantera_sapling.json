@@ -1,7 +1,7 @@
 {
   "variants": {
     "": [
-      { "model": "dtbrbiomesmod:block/saplings/lophantera_ipe" }
+      { "model": "dtbrbiomesmod:block/saplings/lophantera" }
     ]
   }
 }
