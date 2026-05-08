@@ -29,9 +29,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SeasonalAlternativeLeavesGenFeature extends GenFeature {
 
-    public static final TypedRegistry.EntryType<GenFeature> TYPE =
-            TypedRegistry.newType(SeasonalAlternativeLeavesGenFeature::new);
-
     public SeasonalAlternativeLeavesGenFeature(ResourceLocation registryName) {
         super(registryName);
     }
