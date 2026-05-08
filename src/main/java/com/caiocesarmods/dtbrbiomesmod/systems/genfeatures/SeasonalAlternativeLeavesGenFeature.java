@@ -6,6 +6,7 @@ import com.ferreusveritas.dynamictrees.api.network.MapSignal;
 import com.ferreusveritas.dynamictrees.api.registry.TypedRegistry;
 import com.ferreusveritas.dynamictrees.blocks.leaves.DynamicLeavesBlock;
 import com.ferreusveritas.dynamictrees.blocks.leaves.LeavesProperties;
+import com.ferreusveritas.dynamictrees.compat.seasons.SeasonHelper;
 import com.ferreusveritas.dynamictrees.systems.genfeatures.GenFeature;
 import com.ferreusveritas.dynamictrees.systems.genfeatures.GenFeatureConfiguration;
 import com.ferreusveritas.dynamictrees.systems.genfeatures.context.PostGenerationContext;
@@ -18,9 +19,11 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.LeavesBlock;
+import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
+import net.minecraft.world.World;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -92,9 +95,11 @@ public class SeasonalAlternativeLeavesGenFeature extends GenFeature {
         return properties.getDynamicLeavesBlock().get();
     }
 
+    //Change with season
     private BlockState getSwapBlockState(GenFeatureConfiguration configuration, IWorld world, Species species, BlockState state, boolean worldgen) {
         DynamicLeavesBlock originalLeaves = species.getLeavesBlock().orElse(null);
         Block alt = getAltLeavesBlock(configuration);
+
         DynamicLeavesBlock altLeaves = alt instanceof DynamicLeavesBlock ? (DynamicLeavesBlock) alt : null;
         if (originalLeaves != null && altLeaves != null) {
             if (worldgen || world.getRandom().nextFloat() < configuration.get(PLACE_CHANCE)) {
