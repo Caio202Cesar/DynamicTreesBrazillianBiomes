@@ -1,0 +1,7 @@
+{
+  "common_leaves": "dtbrbiomesmod:lophantera",
+  "common_species": "dtbrbiomesmod:lophantera",
+  "primitive_log": "brbiomesmod:lophantera_log",
+  "primitive_stripped_log": "brbiomesmod:stripped_lophantera_log",
+  "max_branch_radius": 6
+}
