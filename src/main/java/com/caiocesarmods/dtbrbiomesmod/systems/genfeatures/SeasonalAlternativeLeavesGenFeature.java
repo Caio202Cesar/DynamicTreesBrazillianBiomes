@@ -1,5 +1,8 @@
 package com.caiocesarmods.dtbrbiomesmod.systems.genfeatures;
 
+import com.caiocesarmods.dtbrbiomesmod.systems.SeasonalLeafConfig;
+import com.caiocesarmods.dtbrbiomesmod.systems.SeasonalLeafRegistry;
+import com.caiocesarmods.dtbrbiomesmod.systems.SeasonalLeafRule;
 import com.ferreusveritas.dynamictrees.api.TreeHelper;
 import com.ferreusveritas.dynamictrees.api.configurations.ConfigurationProperty;
 import com.ferreusveritas.dynamictrees.api.network.MapSignal;
@@ -24,6 +27,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -95,7 +99,6 @@ public class SeasonalAlternativeLeavesGenFeature extends GenFeature {
         return properties.getDynamicLeavesBlock().get();
     }
 
-    //Change with season
     private BlockState getSwapBlockState(GenFeatureConfiguration configuration, IWorld world, Species species, BlockState state, boolean worldgen) {
         DynamicLeavesBlock originalLeaves = species.getLeavesBlock().orElse(null);
         Block alt = getAltLeavesBlock(configuration);
@@ -115,37 +118,225 @@ public class SeasonalAlternativeLeavesGenFeature extends GenFeature {
         return state;
     }
 
-    private boolean setAltLeaves(GenFeatureConfiguration configuration, IWorld world, BlockBounds leafPositions, SafeChunkBounds safeBounds, Species species) {
+    //Change with season
+    private boolean setAltLeaves(
+            GenFeatureConfiguration configuration,
+            IWorld world,
+            BlockBounds leafPositions,
+            SafeChunkBounds safeBounds,
+            Species species,
+            SeasonalAlternativeLeavesGenFeature seasonalLeaves
+    ) {
+
         boolean worldGen = safeBounds != SafeChunkBounds.ANY;
 
         if (worldGen) {
+
             AtomicBoolean isSet = new AtomicBoolean(false);
+
             leafPositions.iterator().forEachRemaining((pos) -> {
-                if (safeBounds.inBounds(pos, true) && world.getRandom().nextFloat() < configuration.get(PLACE_CHANCE)) {
-                    if (world.setBlockState(pos, getSwapBlockState(configuration, world, species, world.getBlockState(pos), true), 2)); {
-                        isSet.set(true);
+
+                if (!safeBounds.inBounds(pos, true)) {
+                    return;
+                }
+
+                float seasonValue = SeasonHelper.getSeasonValue(world, pos);
+
+                float temperature = world.getBiome(pos).getTemperature(pos);
+
+                float seasonalChance = seasonalLeaves.getSeasonalSwapChance(
+                        seasonValue,
+                        temperature
+                );
+
+                // Combine configured chance with seasonal multiplier
+                float finalChance =
+                        configuration.get(PLACE_CHANCE) * seasonalChance;
+
+                if (world.getRandom().nextFloat() < finalChance) {
+
+                    BlockState currentState = world.getBlockState(pos);
+
+                    BlockState replacement = seasonalLeaves.getSeasonalLeaves(
+                            seasonValue,
+                            temperature,
+                            currentState
+                    );
+
+                    if (replacement != currentState) {
+
+                        if (world.setBlockState(pos, replacement, 2)) {
+                            isSet.set(true);
+                        }
                     }
                 }
             });
+
             return isSet.get();
+
         } else {
+
             boolean isSet = false;
+
             List<BlockPos> posList = new LinkedList<>();
+
             for (BlockPos leafPosition : leafPositions) {
                 posList.add(new BlockPos(leafPosition));
             }
+
             if (posList.isEmpty()) {
                 return false;
             }
+
             for (int i = 0; i < configuration.get(QUANTITY); i++) {
-                BlockPos pos = posList.get(world.getRandom().nextInt(posList.size()));
-                if (world.setBlockState(pos, getSwapBlockState(configuration, world, species, world.getBlockState(pos), false), 2)) {
-                    isSet = true;
+
+                BlockPos pos =
+                        posList.get(world.getRandom().nextInt(posList.size()));
+
+                float seasonValue = SeasonHelper.getSeasonValue(world, pos);
+
+                float temperature = world.getBiome(pos).getTemperature(pos);
+
+                float seasonalChance = seasonalLeaves.getSeasonalSwapChance(
+                        seasonValue,
+                        temperature
+                );
+
+                float finalChance =
+                        configuration.get(PLACE_CHANCE) * seasonalChance;
+
+                if (world.getRandom().nextFloat() >= finalChance) {
+                    continue;
+                }
+
+                BlockState currentState = world.getBlockState(pos);
+
+                BlockState replacement = seasonalLeaves.getSeasonalLeaves(
+                        seasonValue,
+                        temperature,
+                        currentState
+                );
+
+                if (replacement != currentState) {
+
+                    if (world.setBlockState(pos, replacement, 2)) {
+                        isSet = true;
+                    }
                 }
             }
+
             return isSet;
         }
     }
+
+    public float getSeasonalSwapChance(
+            float seasonValue,
+            float temperature
+    ) {
+
+        // Tropical biomes change to dried branches during dry season
+        if (temperature >= 0.9F && seasonValue > 1.3F && seasonValue < 2.7F) {
+            return 0.7F;
+        }
+
+        // Autumn
+        if (seasonValue >= 2.0F && seasonValue < 3.0F) {
+
+            if (temperature < 0.3F) {
+                return 1.0F;
+            }
+
+            if (temperature < 0.8F) {
+                return 0.7F;
+            }
+
+            return 0.4F;
+        }
+
+        // Winter
+        if (seasonValue >= 3.0F) {
+            if (temperature < 0.3F) {
+                return 1.0F;
+            }
+
+            if (temperature < 0.8F) {
+                return 1.0F;
+            }
+
+            return 0.8F;
+        }
+
+        // Spring
+        if (seasonValue < 0.7F) {
+            return 0.8F;
+        }
+
+        return 0.0F;
+    }
+
+    public BlockState getSeasonalLeaves(
+            float seasonValue,
+            float temperature,
+            BlockState currentState
+    ) {
+
+        SeasonalLeafConfig config =
+                SeasonalLeafRegistry.get(this.getRegistryName());
+
+        if (config == null) {
+            return currentState;
+        }
+
+        SeasonalLeafRule bestRule = null;
+
+        float bestStrength = 0F;
+
+        for (SeasonalLeafRule rule : config.rules) {
+
+            if (temperature < rule.temp_min
+                    || temperature > rule.temp_max) {
+                continue;
+            }
+
+            float distance =
+                    Math.abs(seasonValue - rule.peak_season);
+
+            // Wrap around season cycle
+            distance = Math.min(distance, 4F - distance);
+
+            if (distance > rule.fade) {
+                continue;
+            }
+
+            float strength =
+                    1F - (distance / rule.fade);
+
+            strength *= rule.chance;
+
+            if (strength > bestStrength) {
+                bestStrength = strength;
+                bestRule = rule;
+            }
+        }
+
+        if (bestRule == null) {
+            return currentState;
+        }
+
+        if (this.random.nextFloat() > bestStrength) {
+            return currentState;
+        }
+
+        Block block =
+                ForgeRegistries.BLOCKS.getValue(bestRule.leaves);
+
+        if (block == null) {
+            return currentState;
+        }
+
+        return block.getDefaultState();
+    }
+
 }
 
 
