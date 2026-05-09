@@ -15,7 +15,9 @@
         {
           "season": "SPRING",
           "climate": "SUBTROPICAL",
-          "alternative_leaves": "dtbrbiomesmod:white_ipe_flowering"
+          "alternative_leaves": "dtbrbiomesmod:white_ipe_flowering",
+          "place_chance": 0.7,
+          "count": 7
         }
      ]
     }
