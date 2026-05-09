@@ -8,13 +8,16 @@ import net.minecraft.client.resources.JsonReloadListener;
 import net.minecraft.profiler.IProfiler;
 import net.minecraft.resources.IResourceManager;
 import net.minecraft.util.ResourceLocation;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Map;
 
 public class SeasonalLeafReloadListener extends JsonReloadListener {
 
-    private static final Gson GSON =
-            new GsonBuilder().create();
+    private static final Gson GSON = new GsonBuilder().create();
+
+    private static final Logger LOGGER = LogManager.getLogger();
 
     public SeasonalLeafReloadListener() {
 
@@ -48,10 +51,15 @@ public class SeasonalLeafReloadListener extends JsonReloadListener {
 
                 SeasonalLeafRegistry.register(config);
 
+                LOGGER.info("Registered config for species: {}", config.species);
+
             } catch (Exception e) {
 
                 e.printStackTrace();
             }
+
+            LOGGER.info("Loading seasonal leaves config: {}", location);
         });
+
     }
 }

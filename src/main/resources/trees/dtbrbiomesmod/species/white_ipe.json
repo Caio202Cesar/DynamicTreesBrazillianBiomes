@@ -10,7 +10,7 @@
   "generate_sapling": true,
   "features": [
     {
-      "name": "dtbrbiomes:seasonal_alt_leaves",
+      "name": "dtbrbiomesmod:seasonal_alt_leaves",
       "properties": {
       "seasonal_leaves": "dtbrbiomesmod:white_ipe"
     }

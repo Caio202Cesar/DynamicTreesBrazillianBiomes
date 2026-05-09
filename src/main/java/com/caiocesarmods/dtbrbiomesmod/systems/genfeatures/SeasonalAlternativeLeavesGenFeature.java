@@ -5,7 +5,6 @@ import com.caiocesarmods.dtbrbiomesmod.systems.SeasonalLeafRegistry;
 import com.caiocesarmods.dtbrbiomesmod.systems.SeasonalLeafRule;
 import com.ferreusveritas.dynamictrees.api.TreeHelper;
 import com.ferreusveritas.dynamictrees.api.network.MapSignal;
-import com.ferreusveritas.dynamictrees.api.registry.TypedRegistry;
 import com.ferreusveritas.dynamictrees.blocks.leaves.DynamicLeavesBlock;
 import com.ferreusveritas.dynamictrees.blocks.leaves.LeavesProperties;
 import com.ferreusveritas.dynamictrees.compat.seasons.SeasonHelper;
@@ -22,12 +21,16 @@ import net.minecraft.block.LeavesBlock;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SeasonalAlternativeLeavesGenFeature extends GenFeature {
+
+    private static final Logger LOGGER = LogManager.getLogger();
 
     public SeasonalAlternativeLeavesGenFeature(ResourceLocation registryName) {
         super(registryName);
@@ -226,6 +229,8 @@ public class SeasonalAlternativeLeavesGenFeature extends GenFeature {
             AtomicBoolean atomic
     ) {
 
+        LOGGER.info("Processing leaf at {}", pos);
+
         float seasonValue =
                 SeasonHelper.getSeasonValue(world, pos);
 
@@ -257,7 +262,8 @@ public class SeasonalAlternativeLeavesGenFeature extends GenFeature {
                         world,
                         seasonValue,
                         temperature,
-                        currentState
+                        currentState,
+                        species
                 );
 
         if (replacement == currentState) {
@@ -271,11 +277,15 @@ public class SeasonalAlternativeLeavesGenFeature extends GenFeature {
                         2
                 );
 
+        LOGGER.info( "Current={} Replacement={}", currentState, replacement );
+
+
         if (success && atomic != null) {
             atomic.set(true);
         }
 
         return success;
+
     }
 
     /*
@@ -288,7 +298,6 @@ public class SeasonalAlternativeLeavesGenFeature extends GenFeature {
             float seasonValue,
             float temperature
     ) {
-
         /*
          * Tropical dry season
          */
@@ -336,6 +345,7 @@ public class SeasonalAlternativeLeavesGenFeature extends GenFeature {
         }
 
         return 0.0F;
+
     }
 
     /*
@@ -348,23 +358,36 @@ public class SeasonalAlternativeLeavesGenFeature extends GenFeature {
             IWorld world,
             float seasonValue,
             float temperature,
-            BlockState currentState
+            BlockState currentState,
+            Species species
     ) {
+
+        LOGGER.info("Species lookup: {}", species.getRegistryName());
 
         SeasonalLeafConfig config =
                 SeasonalLeafRegistry.get(
-                        this.getRegistryName()
+                        species.getRegistryName()
                 );
 
         if (config == null) {
             return currentState;
         }
 
+        LOGGER.info("Config found: {}", true);
+
         SeasonalLeafRule bestRule = null;
 
         float bestStrength = 0F;
 
         for (SeasonalLeafRule rule : config.rules) {
+
+            LOGGER.info(
+                    "Season={}, Temp={}, Rule={}..{}",
+                    seasonValue,
+                    temperature,
+                    rule.temp_min,
+                    rule.temp_max
+            );
 
             if (temperature < rule.temp_min
                     || temperature > rule.temp_max) {
@@ -411,12 +434,17 @@ public class SeasonalAlternativeLeavesGenFeature extends GenFeature {
                         bestRule.leaves_properties
                 );
 
+        LOGGER.info( "Leaves properties lookup: {}", bestRule.leaves_properties );
+
         if (properties == null
                 || !properties.isValid()
                 || !properties.getDynamicLeavesBlock().isPresent()) {
 
             return currentState;
+
         }
+
+        LOGGER.info( "Properties found: {}", true);
 
         DynamicLeavesBlock dynamicLeaves =
                 properties.getDynamicLeavesBlock().get();
@@ -430,6 +458,7 @@ public class SeasonalAlternativeLeavesGenFeature extends GenFeature {
 
         return dynamicLeaves.properties
                 .getDynamicLeavesState(leafDistance);
+
     }
 
     /*
