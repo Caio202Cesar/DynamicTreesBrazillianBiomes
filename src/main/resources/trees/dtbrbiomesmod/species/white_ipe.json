@@ -11,9 +11,13 @@
   "features": [
     {
       "name": "dtbrbiomesmod:seasonal_alt_leaves",
-      "properties": {
-      "seasonal_leaves": "dtbrbiomesmod:white_ipe"
-    }
+      "properties": [
+        {
+          "season": "SPRING",
+          "climate": "SUBTROPICAL",
+          "alternative_leaves": "dtbrbiomesmod:white_ipe_flowering"
+        }
+     ]
     }
   ]
 }

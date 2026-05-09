@@ -53,12 +53,12 @@ public class SeasonalAlternativeLeavesGenFeature extends GenFeature {
 
     @Override
     protected void registerProperties() {
-        this.register(ALT_LEAVES, ALT_LEAVES_BLOCK, PLACE_CHANCE, QUANTITY);
+        this.register(ALT_LEAVES, ALT_LEAVES_BLOCK, SEASON, CLIMATE, PLACE_CHANCE, QUANTITY);
     }
 
     public GenFeatureConfiguration createDefaultConfiguration() {
         return super.createDefaultConfiguration().with(ALT_LEAVES, LeavesProperties.NULL).with(ALT_LEAVES_BLOCK, Blocks.AIR)
-                .with(PLACE_CHANCE, 0.5f).with(QUANTITY, 5);
+                .with(PLACE_CHANCE, 0.5f).with(SEASON, Season.SPRING).with(CLIMATE, Climate.TEMPERATE).with(QUANTITY, 5);
     }
 
     @Override
@@ -100,9 +100,11 @@ public class SeasonalAlternativeLeavesGenFeature extends GenFeature {
 
     private Block getAltLeavesBlock(GenFeatureConfiguration conifuration) {
         LeavesProperties properties = conifuration.get(ALT_LEAVES);
+
         if (!properties.isValid() || !properties.getDynamicLeavesBlock().isPresent()) {
             return conifuration.get(ALT_LEAVES_BLOCK);
         }
+
         return properties.getDynamicLeavesBlock().get();
     }
 
