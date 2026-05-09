@@ -4,8 +4,8 @@
   "rules": [
 
     {
-      "peak_season": 0.15,
-      "fade": 0.85,
+      "peak_season": 0.0,
+      "fade": 1.00,
 
       "temp_min": 0.85,
       "temp_max": 0.89,
