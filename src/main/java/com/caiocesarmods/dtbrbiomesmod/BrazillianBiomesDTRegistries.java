@@ -14,6 +14,8 @@ import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import static com.mojang.blaze3d.vertex.IVertexBuilder.LOGGER;
+
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class BrazillianBiomesDTRegistries {
 
@@ -38,7 +40,10 @@ public class BrazillianBiomesDTRegistries {
 
     @SubscribeEvent
     public static void onGenFeatureRegistry(final com.ferreusveritas.dynamictrees.api.registry.RegistryEvent<GenFeature> event) {
+        LOGGER.debug("onGenFeatureRegistry() called.");
+        LOGGER.debug("Registering seasonal_alt_leaves GenFeature.");
         event.getRegistry().register(new SeasonalAlternativeLeavesGenFeature(BrazillianBiomesDTAddon.resLoc("seasonal_alt_leaves")));
+        LOGGER.debug("seasonal_alt_leaves registered successfully.");
 
         //ModGenFeatures.register(event.getRegistry());
 
