@@ -1,0 +1,7 @@
+{
+  "common_leaves": "dtbrbiomesmod:yerba_mate",
+  "common_species": "dtbrbiomesmod:yerba_mate",
+  "primitive_log": "brbiomesmod:yerba_mate_log",
+  "primitive_stripped_log": "brbiomesmod:stripped_yerba_mate_log",
+  "max_branch_radius": 16
+}

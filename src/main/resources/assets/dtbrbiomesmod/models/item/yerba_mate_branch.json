@@ -1,0 +1,7 @@
+{
+  "parent": "dynamictrees:item/branch",
+  "textures": {
+    "bark": "brbiomesmod:block/yerba_mate_log",
+    "rings": "brbiomesmod:block/yerba_mate_log_top"
+  }
+}

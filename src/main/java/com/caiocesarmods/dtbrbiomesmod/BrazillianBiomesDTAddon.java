@@ -1,5 +1,6 @@
 package com.caiocesarmods.dtbrbiomesmod;
 
+import com.caiocesarmods.dtbrbiomesmod.Item.ModItems;
 import com.caiocesarmods.dtbrbiomesmod.Models.ModelBakeEventHandler;
 import com.ferreusveritas.dynamictrees.api.GatherDataHelper;
 import com.ferreusveritas.dynamictrees.api.registry.RegistryHandler;
@@ -35,6 +36,8 @@ public class BrazillianBiomesDTAddon {
 
     public BrazillianBiomesDTAddon() {
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
+
+        ModItems.register(eventBus);
 
         eventBus.addListener(this::commonSetup);
         eventBus.addListener(this::clientSetup);

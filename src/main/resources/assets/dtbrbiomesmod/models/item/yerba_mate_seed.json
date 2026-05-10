@@ -1,0 +1,6 @@
+{
+  "parent":"dynamictrees:item/standard_seed",
+  "textures": {
+    "layer0":"dtbrbiomesmod:item/yerba_mate_seed"
+  }
+}
