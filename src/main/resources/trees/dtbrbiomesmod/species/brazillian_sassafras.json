@@ -1,0 +1,11 @@
+{
+  "family": "dtbrbiomesmod:brazillian_sassafras",
+  "tapering": 0.3,
+  "signal_energy": 14.0,
+  "up_probability": 6,
+  "lowest_branch_height": 7,
+  "growth_rate": 0.8,
+  "leaves_properties": "dtbrbiomesmod:brazillian_sassafras",
+  "generate_seed": true,
+  "generate_sapling": true
+}

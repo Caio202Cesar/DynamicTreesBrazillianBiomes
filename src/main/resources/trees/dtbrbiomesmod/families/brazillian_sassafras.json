@@ -1,0 +1,7 @@
+{
+  "common_leaves": "dtbrbiomesmod:brazillian_sassafras",
+  "common_species": "dtbrbiomesmod:brazillian_sassafras",
+  "primitive_log": "brbiomesmod:brazillian_sassafras_log",
+  "primitive_stripped_log": "brbiomesmod:stripped_brazillian_sassafras_log",
+  "max_branch_radius": 16
+}

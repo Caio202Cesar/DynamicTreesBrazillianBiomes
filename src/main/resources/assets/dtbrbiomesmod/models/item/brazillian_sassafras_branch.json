@@ -1,0 +1,7 @@
+{
+  "parent": "dynamictrees:item/branch",
+  "textures": {
+    "bark": "brbiomesmod:block/brazillian_sassafras_log",
+    "rings": "brbiomesmod:block/brazillian_sassafras_log_top"
+  }
+}
