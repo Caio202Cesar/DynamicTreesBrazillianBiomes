@@ -16,5 +16,16 @@
       "sapling_item": "brbiomesmod:cashewnut",
       "can_craft_seed_to_sapling": false
     }
+  ],
+  "fruits": [
+    "dtbrbiomesmod:cashew"
+  ],
+  "features": [
+    {
+      "name": "fruit",
+      "properties": {
+        "fruit": "dtbrbiomesmod:cashew"
+      }
+    }
   ]
 }

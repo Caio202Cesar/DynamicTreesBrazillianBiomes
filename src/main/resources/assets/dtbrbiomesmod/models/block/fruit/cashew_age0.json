@@ -1,0 +1,7 @@
+{
+  "parent": "dtbrbiomesmod:block/fruit/generic/cross_age0",
+  "textures": {
+    "particle": "dtbrbiomesmod:block/cashew",
+    "fruit": "dtbrbiomesmod:block/cashew"
+  }
+}
