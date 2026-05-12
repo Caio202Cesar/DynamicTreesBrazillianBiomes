@@ -1,6 +1,7 @@
 {
   "block_registry_name": "cashew_fruit",
   "item_stack": "brbiomesmod:cashew_fruit",
+  "can_bone_meal": true,
   "block_shapes": [
     { "function": "fruit", "parameters": { "radius": 1, "height": 1, "stem_length": 0, "fraction": 16 } },
     { "function": "fruit", "parameters": { "radius": 2, "height": 7, "stem_length": 0 } },
