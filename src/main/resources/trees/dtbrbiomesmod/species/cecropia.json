@@ -1,0 +1,11 @@
+{
+  "family": "dtbrbiomesmod:cecropia",
+  "tapering": 0.3,
+  "signal_energy": 14.0,
+  "up_probability": 0.3,
+  "lowest_branch_height": 14,
+  "growth_rate": 0.8,
+  "leaves_properties": "dtbrbiomesmod:cecropia",
+  "generate_seed": true,
+  "generate_sapling": true
+}
