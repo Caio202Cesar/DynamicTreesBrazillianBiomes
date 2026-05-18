@@ -22,8 +22,9 @@ import net.minecraft.block.LeavesBlock;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
+import net.minecraft.world.server.ServerWorld;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -43,29 +44,17 @@ public class SeasonalAlternativeLeavesGenFeature extends GenFeature {
     public SeasonalAlternativeLeavesGenFeature(ResourceLocation registryName) {
         super(registryName);
 
-        LOGGER.debug("SeasonalAlternativeLeavesGenFeature constructor called.");
-        LOGGER.debug("Registry name: {}", registryName);
 
     }
 
     @Override
     protected void registerProperties() {
-        LOGGER.debug("registerProperties() called.");
 
         this.register(ALT_LEAVES, ALT_LEAVES_BLOCK, SEASON, CLIMATE, PLACE_CHANCE, QUANTITY);
 
-        LOGGER.debug("Properties registered:");
-        LOGGER.debug("ALT_LEAVES={}", ALT_LEAVES);
-        LOGGER.debug("ALT_LEAVES_BLOCK={}", ALT_LEAVES_BLOCK);
-        LOGGER.debug("SEASON={}", SEASON);
-        LOGGER.debug("CLIMATE={}", CLIMATE);
-        LOGGER.debug("PLACE_CHANCE={}", PLACE_CHANCE);
-        LOGGER.debug("QUANTITY={}", QUANTITY);
     }
 
     public GenFeatureConfiguration createDefaultConfiguration() {
-
-        LOGGER.debug("createDefaultConfiguration() called.");
 
         GenFeatureConfiguration configuration = super.createDefaultConfiguration()
                 .with(ALT_LEAVES, LeavesProperties.NULL)
@@ -75,90 +64,137 @@ public class SeasonalAlternativeLeavesGenFeature extends GenFeature {
                 .with(CLIMATE, Climate.TEMPERATE)
                 .with(QUANTITY, 5);
 
-        LOGGER.debug("Default configuration created:");
-        LOGGER.debug("DEFAULT_ALT_LEAVES={}", configuration.get(ALT_LEAVES));
-        LOGGER.debug("DEFAULT_ALT_LEAVES_BLOCK={}", configuration.get(ALT_LEAVES_BLOCK));
-        LOGGER.debug("DEFAULT_PLACE_CHANCE={}", configuration.get(PLACE_CHANCE));
-        LOGGER.debug("DEFAULT_SEASON={}", configuration.get(SEASON));
-        LOGGER.debug("DEFAULT_CLIMATE={}", configuration.get(CLIMATE));
-        LOGGER.debug("DEFAULT_QUANTITY={}", configuration.get(QUANTITY));
-
         return configuration;
 
     }
 
+    private boolean matchesEnvironment(GenFeatureConfiguration configuration,
+                                       IWorld world,
+                                       BlockPos pos) {
+
+        if (!(world instanceof ServerWorld)) {
+            return false;
+        }
+
+        ServerWorld serverWorld = (ServerWorld) world;
+
+        String currentSeason =
+                Season.getSeason(serverWorld.getDayTime());
+
+        String currentClimate =
+                Climate.getClimate(serverWorld, pos);
+
+        return currentSeason.equals(configuration.get(SEASON).name())
+                && currentClimate.equals(configuration.get(CLIMATE).name());
+    }
+
     @Override
     public boolean shouldApply(Species species, GenFeatureConfiguration configuration) {
-        LOGGER.debug("shouldApply() called.");
-        LOGGER.debug("Species={}", species);
-        LOGGER.debug("Configuration ALT_LEAVES={}",
 
         configuration.get(ALT_LEAVES).ifValid(properties -> {
-            LOGGER.debug("ALT_LEAVES properties valid.");
-            LOGGER.debug("Properties={}", properties);
 
             properties.setFamily(species.getFamily());
 
-            LOGGER.debug("Family set on properties: {}", species.getFamily());
-
             species.addValidLeafBlocks(properties);
 
-            LOGGER.debug("Added valid leaf blocks to species.");
+        });
 
-        }));
-
-        LOGGER.debug("shouldApply() returning true.");
         return true;
     }
 
     @Override
-    protected boolean postGenerate(GenFeatureConfiguration configuration, PostGenerationContext context) {
+    protected boolean postGenerate(GenFeatureConfiguration configuration,
+                                   PostGenerationContext context) {
 
-        LOGGER.debug("postGenerate() called.");
+        if (!matchesEnvironment(configuration,
+                context.world(),
+                context.pos())) {
 
-        final BlockBounds bounds = context.species().getFamily().expandLeavesBlockBounds(new BlockBounds(context.endPoints()));
+            return false;
+        }
 
-        LOGGER.debug("Generated bounds={}", bounds);
-        LOGGER.debug("Proper species={}", context.species());
-        LOGGER.debug("Endpoints={}", context.endPoints());
+        final BlockBounds bounds =
+                context.species()
+                        .getFamily()
+                        .expandLeavesBlockBounds(
+                                new BlockBounds(context.endPoints())
+                        );
 
-        return this.setAltLeaves(configuration, context.world(), bounds, context.bounds(), context.species());
-
+        return this.setAltLeaves(configuration,
+                context.world(),
+                bounds,
+                context.bounds(),
+                context.species());
     }
 
     @Override
-    protected boolean postGrow(GenFeatureConfiguration configuration, PostGrowContext context) {
+    protected boolean postGrow(GenFeatureConfiguration configuration,
+                               PostGrowContext context) {
 
         if (context.fertility() == 0) {
             return false;
         }
 
         final IWorld world = context.world();
+
+        if (!(world instanceof ServerWorld)) {
+            return false;
+        }
+
+        final ServerWorld serverWorld = (ServerWorld) world;
+
+        String currentSeason =
+                Season.getSeason(serverWorld.getDayTime());
+
+        String currentClimate =
+                Climate.getClimate(serverWorld, context.pos());
+
+        if (!currentSeason.equals(configuration.get(SEASON).name())
+                || !currentClimate.equals(configuration.get(CLIMATE).name())) {
+
+            return false;
+        }
+
         final Species species = context.species();
 
         final FindEndsNode endFinder = new FindEndsNode();
-        TreeHelper.startAnalysisFromRoot(world, context.pos(), new MapSignal(endFinder));
+
+        TreeHelper.startAnalysisFromRoot(
+                world,
+                context.pos(),
+                new MapSignal(endFinder)
+        );
+
         final List<BlockPos> endPoints = endFinder.getEnds();
+
         if (endPoints.isEmpty()) {
             return false;
         }
 
-        final BlockPos chosenEndPoint = endPoints.get(world.getRandom().nextInt(endPoints.size()));
-        final BlockBounds bounds = species.getFamily().expandLeavesBlockBounds(new BlockBounds(chosenEndPoint));
+        final BlockPos chosenEndPoint =
+                endPoints.get(
+                        world.getRandom().nextInt(endPoints.size())
+                );
 
-        return setAltLeaves(configuration, world, bounds, SafeChunkBounds.ANY, species);
+        final BlockBounds bounds =
+                species.getFamily()
+                        .expandLeavesBlockBounds(
+                                new BlockBounds(chosenEndPoint)
+                        );
+
+        return setAltLeaves(configuration,
+                world,
+                bounds,
+                SafeChunkBounds.ANY,
+                species);
     }
 
     private Block getAltLeavesBlock(GenFeatureConfiguration conifuration) {
-        LOGGER.debug("getAltLeavesBlock() called.");
-
         LeavesProperties properties = conifuration.get(ALT_LEAVES);
-
-        LOGGER.debug("LeavesProperties={}", properties);
 
         if (!properties.isValid() || !properties.getDynamicLeavesBlock().isPresent()) {
             LOGGER.debug("Using ALT_LEAVES_BLOCK fallback.");
-            LOGGER.debug("ALT_LEAVES_BLOCK={}", conifuration.get(ALT_LEAVES_BLOCK));
+            LOGGER.debug("ALT_LEAVES_BLOCK_GENERATED={}", conifuration.get(ALT_LEAVES_BLOCK));
 
             return conifuration.get(ALT_LEAVES_BLOCK);
         }
@@ -171,43 +207,36 @@ public class SeasonalAlternativeLeavesGenFeature extends GenFeature {
 
     private BlockState getSwapBlockState(GenFeatureConfiguration configuration, IWorld world, Species species, BlockState state, boolean worldgen) {
 
-        LOGGER.debug("getSwapBlockState() called.");
-
-        LOGGER.debug("Input state={}", state);
-        LOGGER.debug("Worldgen={}", worldgen);
-
         DynamicLeavesBlock originalLeaves = species.getLeavesBlock().orElse(null);
-
-        LOGGER.debug("Original leaves={}", originalLeaves);
 
         Block alt = getAltLeavesBlock(configuration);
 
-        LOGGER.debug("Alt block={}", alt);
-
         DynamicLeavesBlock altLeaves = alt instanceof DynamicLeavesBlock ? (DynamicLeavesBlock) alt : null;
-
-        LOGGER.debug("Alt leaves dynamic block={}", altLeaves);
 
         if (originalLeaves != null && altLeaves != null) {
 
             if (worldgen || world.getRandom().nextFloat() < configuration.get(PLACE_CHANCE)) {
 
-                LOGGER.debug("Swap direction: original -> alt");
-
                 if (state.getBlock() == originalLeaves) {
 
-                    LOGGER.debug("State block matches original leaves.");
+                    if (state.hasProperty(LeavesBlock.DISTANCE)) {
 
-                    return altLeaves.properties.getDynamicLeavesState(state.get(LeavesBlock.DISTANCE));
+                        int distance = state.get(LeavesBlock.DISTANCE);
+
+                        // Only replace outer canopy leaves
+                        if (distance >= 4) {
+
+                            return altLeaves.properties
+                                    .getDynamicLeavesState(distance);
+                        }
+
+                    }
                 }
 
             } else {
 
-                LOGGER.debug("Swap direction: alt -> original");
-
                 if (state.getBlock() == altLeaves) {
 
-                    LOGGER.debug("State block matches alt leaves.");
                     return originalLeaves.properties.getDynamicLeavesState(state.get(LeavesBlock.DISTANCE));
                 }
             }
@@ -217,121 +246,87 @@ public class SeasonalAlternativeLeavesGenFeature extends GenFeature {
         return state;
     }
 
-    private boolean setAltLeaves(GenFeatureConfiguration configuration, IWorld world, BlockBounds leafPositions, SafeChunkBounds safeBounds, Species species) {
-
-        LOGGER.debug("setAltLeaves() called.");
-        LOGGER.debug("leafPositions={}", leafPositions);
-        LOGGER.debug("safeBounds={}", safeBounds);
-        LOGGER.debug("species={}", species);
+    private boolean setAltLeaves(GenFeatureConfiguration configuration,
+                                 IWorld world,
+                                 BlockBounds leafPositions,
+                                 SafeChunkBounds safeBounds,
+                                 Species species) {
 
         boolean worldGen = safeBounds != SafeChunkBounds.ANY;
 
-        LOGGER.debug("worldGen={}", worldGen);
-
         if (worldGen) {
-
-            LOGGER.debug("Entering worldgen branch.");
 
             AtomicBoolean isSet = new AtomicBoolean(false);
 
             leafPositions.iterator().forEachRemaining((pos) -> {
 
-                LOGGER.debug("Checking position={}", pos);
-
                 boolean inBounds = safeBounds.inBounds(pos, true);
 
-                LOGGER.debug("inBounds={}", inBounds);
+                if (inBounds) {
 
-                float random = world.getRandom().nextFloat();
-
-                LOGGER.debug("randomValue={}", random);
-                LOGGER.debug("placeChance={}", configuration.get(PLACE_CHANCE));
-
-                if (inBounds && random < configuration.get(PLACE_CHANCE)) {
-
-                    LOGGER.debug("Attempting swap at {}", pos);
-
-                    BlockState currentState = world.getBlockState(pos);
-
-                    LOGGER.debug("currentState={}", currentState);
+                    BlockState currentState =
+                            world.getBlockState(pos);
 
                     BlockState replacement =
-                            getSwapBlockState(configuration, world, species, currentState, true);
+                            getSwapBlockState(
+                                    configuration,
+                                    world,
+                                    species,
+                                    currentState,
+                                    true
+                            );
 
-                    LOGGER.debug("replacementState={}", replacement);
-
-                    if (world.setBlockState(pos, replacement, 2)) {
-
-                        LOGGER.debug("Successfully replaced block at {}", pos);
+                    if (!replacement.equals(currentState)
+                            && world.setBlockState(pos, replacement, 2)) {
 
                         isSet.set(true);
-
-                    } else {
-
-                        LOGGER.debug("Failed to replace block at {}", pos);
                     }
                 }
             });
-
-            LOGGER.debug("Returning worldgen result={}", isSet.get());
 
             return isSet.get();
 
         } else {
 
-            LOGGER.debug("Entering grow branch.");
-
             boolean isSet = false;
 
-            List<BlockPos> posList = new LinkedList<>();
+            List<BlockPos> posList = new ArrayList<>();
 
             for (BlockPos leafPosition : leafPositions) {
-
-                LOGGER.debug("Adding leaf position={}", leafPosition);
 
                 posList.add(new BlockPos(leafPosition));
             }
 
-            LOGGER.debug("Collected positions={}", posList.size());
-
             if (posList.isEmpty()) {
-
-                LOGGER.debug("Position list empty. Returning false.");
 
                 return false;
             }
 
             for (int i = 0; i < configuration.get(QUANTITY); i++) {
 
-                LOGGER.debug("Iteration={}", i);
-
                 BlockPos pos =
-                        posList.get(world.getRandom().nextInt(posList.size()));
+                        posList.get(
+                                world.getRandom().nextInt(posList.size())
+                        );
 
-                LOGGER.debug("Chosen position={}", pos);
-
-                BlockState currentState = world.getBlockState(pos);
-
-                LOGGER.debug("currentState={}", currentState);
+                BlockState currentState =
+                        world.getBlockState(pos);
 
                 BlockState replacement =
-                        getSwapBlockState(configuration, world, species, currentState, false);
+                        getSwapBlockState(
+                                configuration,
+                                world,
+                                species,
+                                currentState,
+                                false
+                        );
 
-                LOGGER.debug("replacementState={}", replacement);
-
-                if (world.setBlockState(pos, replacement, 2)) {
-
-                    LOGGER.debug("Successfully replaced block at {}", pos);
+                if (!replacement.equals(currentState)
+                        && world.setBlockState(pos, replacement, 2)) {
 
                     isSet = true;
-
-                } else {
-
-                    LOGGER.debug("Failed to replace block at {}", pos);
                 }
             }
-
-            LOGGER.debug("Returning grow result={}", isSet);
 
             return isSet;
         }
