@@ -44,7 +44,6 @@ public class SeasonalAlternativeLeavesGenFeature extends GenFeature {
     public SeasonalAlternativeLeavesGenFeature(ResourceLocation registryName) {
         super(registryName);
 
-
     }
 
     @Override
